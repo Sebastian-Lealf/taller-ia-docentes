@@ -312,6 +312,164 @@
 
     .ethics li, .steps li { margin-bottom: 8px; }
 
+    .usage-chart {
+      display: grid;
+      gap: 12px;
+      margin: 18px 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 250, 240, .82);
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr) 70px;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .bar-track {
+      height: 18px;
+      border: 1px solid rgba(25, 24, 22, .14);
+      background: rgba(25, 24, 22, .06);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: var(--value);
+      background: linear-gradient(90deg, var(--green), var(--gold));
+    }
+
+    .flow-board {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .flow-step {
+      appearance: none;
+      text-align: left;
+      min-height: 150px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 250, 240, .86);
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .flow-step:hover,
+    .flow-step.active {
+      transform: translateY(-2px);
+      border-color: rgba(37, 76, 69, .55);
+      box-shadow: 0 16px 34px rgba(38, 32, 22, .13);
+    }
+
+    .flow-step strong {
+      display: block;
+      color: var(--red);
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .flow-step span {
+      display: block;
+      color: var(--green);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .flow-step small {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .solution-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 250, 240, .82);
+      overflow: hidden;
+      margin: 18px 0;
+    }
+
+    .solution-panel header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 14px;
+      background: rgba(37, 76, 69, .09);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .solution-panel h4 { margin: 0; }
+
+    .ghost-button {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 9px 12px;
+      background: var(--panel);
+      color: var(--ink);
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .ghost-button:hover { background: rgba(37, 76, 69, .09); }
+
+    .solution-panel pre {
+      background: var(--code);
+      color: #f1eadf;
+      max-height: 480px;
+    }
+
+    .preview-paper {
+      display: none;
+      margin-top: 18px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdf8;
+      box-shadow: var(--shadow);
+    }
+
+    .preview-paper.open { display: block; }
+
+    .preview-paper h4 {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      font-size: 25px;
+      line-height: 1.1;
+      margin: 0 0 10px;
+    }
+
+    .paper-meta {
+      color: var(--muted);
+      font-size: 13px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+
+    .mini-figure {
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: rgba(37, 76, 69, .05);
+      margin: 14px 0;
+    }
+
+    .mini-figure .bar-row { grid-template-columns: 120px minmax(0, 1fr) 45px; }
+
     .footer {
       display: flex;
       justify-content: space-between;
@@ -333,12 +491,15 @@
       aside { position: relative; height: auto; }
       nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .hero-grid, .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .flow-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
       main { padding: 24px 15px 54px; }
       nav, .hero-grid, .tools-grid { grid-template-columns: 1fr; }
+      .flow-board { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 1fr; gap: 6px; }
       .hero { min-height: auto; padding-top: 18px; }
       table { overflow-x: auto; }
       thead, tbody, tr { min-width: 760px; }
@@ -357,6 +518,7 @@
         <a href="#introduccion-ia">IA y prompts</a>
         <a href="#agenda">Agenda</a>
         <a href="#herramientas">Herramientas</a>
+        <a href="#flujos-herramientas">Flujos y graficos</a>
         <a href="#flujo-paper">Flujo paper completo</a>
         <a href="#chatgpt">ChatGPT + Colab</a>
         <a href="#objetivos">Objetivos y rubricas</a>
@@ -374,7 +536,7 @@
 
     <main>
       <section class="hero" id="inicio">
-        <div class="eyebrow">Conferencia practica para manana</div>
+        <div class="eyebrow">Laboratorio practico para docentes investigadores</div>
         <h2>IA aplicada a docencia, investigacion y produccion academica.</h2>
         <p>La idea no es mostrar magia. Es mostrar flujos de trabajo repetibles: preguntar mejor, verificar, sintetizar, visualizar datos, producir materiales didacticos y ahorrar tiempo sin renunciar al criterio investigador.</p>
         <div class="hero-grid">
@@ -541,15 +703,15 @@ No respondas la tarea del prompt todavia; primero mejora el prompt.</pre>
 
       <section id="agenda">
         <h3>Agenda sugerida</h3>
-        <p class="lede">Puedes usar esta estructura tal cual si tienes entre 75 y 100 minutos. Si tienes menos tiempo, ejecuta solo las estaciones 1, 3, 5 y 7.</p>
+        <p class="lede">Puedes usar esta estructura como ruta flexible. Si tienes poco tiempo, ejecuta solo introduccion, herramientas, flujo completo, Colab y cierre etico.</p>
         <div class="schedule">
-          <div>0-8 min</div><div>Apertura: que puede y que no debe delegarse a IA en investigacion.</div>
-          <div>8-25 min</div><div>ChatGPT con datos: pegar CSV, pedir analisis, pedir codigo para Google Colab y leer una grafica.</div>
-          <div>25-37 min</div><div>ChatGPT para objetivos, rubricas, instrumentos y retroalimentacion docente.</div>
-          <div>37-48 min</div><div>Gamma: transformar un tema academico en una presentacion clara y visual.</div>
-          <div>48-60 min</div><div>NotebookLM o Claude: trabajar con PDFs, apuntes y archivos propios.</div>
-          <div>60-75 min</div><div>Busqueda academica: Elicit, Consensus, Perplexity y SciSpace.</div>
-          <div>75-90 min</div><div>Imagenes didacticas con Gemini/ChatGPT y cierre etico con checklist.</div>
+          <div>Apertura</div><div>Que puede y que no debe delegarse a IA en investigacion.</div>
+          <div>Base comun</div><div>Que es una herramienta de IA aplicada, que es un prompt y como formularlo.</div>
+          <div>Herramientas</div><div>Comparar ChatGPT, Claude, Gemini, NotebookLM, Elicit, Consensus, SciSpace, Gamma, Canva, Napkin y Zotero.</div>
+          <div>Flujos</div><div>Mostrar graficos de uso, mapa de decisiones y ejemplo de flujo completo por herramientas.</div>
+          <div>Datos</div><div>ChatGPT con CSV, analisis descriptivo, codigo para Google Colab y lectura de graficas.</div>
+          <div>Paper</div><div>Literatura, Zotero, Colab, LaTeX, preview del articulo y presentacion final en Gamma.</div>
+          <div>Cierre</div><div>Imagenes didacticas, auditoria critica, privacidad, autoria y verificacion de fuentes.</div>
         </div>
       </section>
 
@@ -617,6 +779,74 @@ No respondas la tarea del prompt todavia; primero mejora el prompt.</pre>
             <h4><a href="https://www.napkin.ai" target="_blank">Napkin AI</a></h4>
             <p>Convierte texto en esquemas visuales, diagramas y mapas conceptuales para explicar ideas complejas.</p>
           </article>
+        </div>
+      </section>
+
+      <section id="flujos-herramientas">
+        <h3>Flujos y graficos para explicar el ecosistema</h3>
+        <p class="lede">Esta seccion sirve para mostrar visualmente que las herramientas se encadenan. Un docente no necesita usar todas: necesita saber en que momento cada una aporta valor.</p>
+
+        <h4>Herramientas mas visibles en el ecosistema IA</h4>
+        <p class="lede">Grafico orientativo para explicar popularidad relativa en conversacion publica, trafico web y adopcion docente. No debe presentarse como una medicion academica cerrada; sirve para iniciar la discusion.</p>
+        <div class="usage-chart" aria-label="Grafico orientativo de uso de herramientas de IA">
+          <div class="bar-row"><strong>ChatGPT</strong><div class="bar-track"><div class="bar-fill" style="--value: 92%"></div></div><span>Muy alto</span></div>
+          <div class="bar-row"><strong>Gemini</strong><div class="bar-track"><div class="bar-fill" style="--value: 58%"></div></div><span>Alto</span></div>
+          <div class="bar-row"><strong>Microsoft Copilot</strong><div class="bar-track"><div class="bar-fill" style="--value: 50%"></div></div><span>Alto</span></div>
+          <div class="bar-row"><strong>Claude</strong><div class="bar-track"><div class="bar-fill" style="--value: 36%"></div></div><span>Medio</span></div>
+          <div class="bar-row"><strong>Perplexity</strong><div class="bar-track"><div class="bar-fill" style="--value: 31%"></div></div><span>Medio</span></div>
+          <div class="bar-row"><strong>Canva AI</strong><div class="bar-track"><div class="bar-fill" style="--value: 44%"></div></div><span>Alto</span></div>
+          <div class="bar-row"><strong>Elicit / Consensus / SciSpace</strong><div class="bar-track"><div class="bar-fill" style="--value: 18%"></div></div><span>Nicho</span></div>
+        </div>
+        <div class="band">
+          <strong>Como explicarlo:</strong> las herramientas mas populares no siempre son las mas rigurosas para investigacion. ChatGPT puede ser excelente para empezar; Elicit, Consensus, SciSpace y Zotero ayudan cuando la pregunta exige evidencia academica trazable.
+        </div>
+
+        <h4>Como funciona una IA generativa, explicado sin tecnicismos</h4>
+        <div class="flow-board">
+          <button class="flow-step" data-flow="ia-entrada"><strong>1</strong><span>Entrada</span><small>El usuario escribe prompt, carga archivo, pega datos o sube imagen.</small></button>
+          <button class="flow-step" data-flow="ia-contexto"><strong>2</strong><span>Contexto</span><small>El modelo interpreta instrucciones, restricciones y ejemplos.</small></button>
+          <button class="flow-step" data-flow="ia-prediccion"><strong>3</strong><span>Generacion</span><small>Produce texto, codigo, tabla o imagen prediciendo la salida mas probable.</small></button>
+          <button class="flow-step" data-flow="ia-verificacion"><strong>4</strong><span>Verificacion</span><small>El experto revisa fuentes, datos, sesgos, privacidad y utilidad.</small></button>
+        </div>
+
+        <div class="solution-panel" id="aiFlowPanel">
+          <header>
+            <h4 id="flowTitle">Haz clic en un cuadro para mostrar la solucion</h4>
+            <button class="ghost-button" id="copyFlowSolution" type="button">Copiar solucion</button>
+          </header>
+          <pre id="flowSolution">Selecciona un paso del diagrama. Aqui aparecera un prompt, codigo o guion para demostrarlo en vivo.</pre>
+        </div>
+
+        <h4>Flujo complejo: de pregunta a articulo LaTeX y presentacion</h4>
+        <p class="lede">Ejemplo real y sencillo: miniinvestigacion con datos Gapminder sobre relacion entre PIB per capita y esperanza de vida en 2007. Si una IA demora, puedes copiar las soluciones de cada cuadro y seguir la demostracion.</p>
+        <div class="flow-board">
+          <button class="flow-step" data-flow="research-gpt"><strong>GPT / Perplexity</strong><span>Consulta inicial</span><small>Delimitar pregunta, fuentes y terminos.</small></button>
+          <button class="flow-step" data-flow="research-chatpdf"><strong>ChatPDF / SciSpace</strong><span>Resumen de papers</span><small>Extraer marco teorico y metodo.</small></button>
+          <button class="flow-step" data-flow="research-elicit"><strong>Elicit / Consensus</strong><span>Matriz de literatura</span><small>Buscar evidencia y vacios.</small></button>
+          <button class="flow-step" data-flow="research-zotero"><strong>Zotero</strong><span>BibTeX</span><small>Guardar y exportar referencias.</small></button>
+          <button class="flow-step" data-flow="research-colab"><strong>Colab</strong><span>Graficas reales</span><small>Analizar Gapminder con Python.</small></button>
+          <button class="flow-step" data-flow="research-claude"><strong>Claude / GPT</strong><span>Paper LaTeX</span><small>Armar texto academico verificable.</small></button>
+          <button class="flow-step" data-flow="research-gamma"><strong>Gamma</strong><span>Diapositivas</span><small>Convertir resultados en charla.</small></button>
+          <button class="flow-step" data-flow="research-canva"><strong>Canva / Napkin</strong><span>Visual didactico</span><small>Poster, infografia y diagrama.</small></button>
+        </div>
+
+        <button class="ghost-button" id="togglePreview" type="button">Ver preview del documento final</button>
+        <div class="preview-paper" id="paperPreview">
+          <h4>PIB per capita y esperanza de vida: analisis descriptivo con datos Gapminder 2007</h4>
+          <div class="paper-meta">Miniarticulo demostrativo para taller docente. Datos publicos Gapminder. Enfoque descriptivo, no causal.</div>
+          <p><strong>Resumen.</strong> Este ejercicio analiza la relacion descriptiva entre PIB per capita y esperanza de vida en paises incluidos en Gapminder para el año 2007. El objetivo es mostrar un flujo academico reproducible con IA: formulacion de pregunta, consulta de fuentes, analisis en Python, redaccion asistida y preparacion de material visual.</p>
+          <p><strong>Pregunta.</strong> Que patron descriptivo se observa entre el PIB per capita y la esperanza de vida de los paises en 2007?</p>
+          <p><strong>Metodo.</strong> Se usa el dataset Gapminder incluido en Plotly Express. Se filtra el año 2007, se calcula la correlacion entre PIB per capita y esperanza de vida, y se visualiza la relacion con escala logaritmica para PIB.</p>
+          <div class="mini-figure">
+            <strong>Figura esperada: esperanza de vida vs PIB per capita.</strong>
+            <div class="bar-row"><span>Americas</span><div class="bar-track"><div class="bar-fill" style="--value: 76%"></div></div><span>alta</span></div>
+            <div class="bar-row"><span>Europe</span><div class="bar-track"><div class="bar-fill" style="--value: 82%"></div></div><span>alta</span></div>
+            <div class="bar-row"><span>Africa</span><div class="bar-track"><div class="bar-fill" style="--value: 52%"></div></div><span>baja</span></div>
+            <div class="bar-row"><span>Asia</span><div class="bar-track"><div class="bar-fill" style="--value: 69%"></div></div><span>media</span></div>
+          </div>
+          <p><strong>Resultado esperado.</strong> Se observa una asociacion positiva: los paises con mayor PIB per capita tienden a presentar mayor esperanza de vida, aunque con variacion entre continentes y excepciones importantes.</p>
+          <p><strong>Limitaciones.</strong> El ejercicio es transversal, descriptivo y usa datos agregados por pais. No permite afirmar causalidad ni explicar mecanismos sociales, sanitarios o politicos sin literatura adicional.</p>
+          <p><strong>Uso didactico.</strong> Sirve para mostrar como una investigacion sencilla puede pasar por IA, Colab, LaTeX, Zotero, Gamma, Canva y Napkin sin perder trazabilidad.</p>
         </div>
       </section>
 
@@ -1561,6 +1791,340 @@ No suavices los problemas. Quiero una auditoria exigente.</pre>
   </div>
 
   <script>
+    const flowSolutions = {
+      "ia-entrada": {
+        title: "Entrada: prompt, archivo o datos",
+        body: String.raw`Guion para explicar:
+
+La IA no lee nuestra mente. Recibe una entrada: una pregunta, un archivo, una tabla, una imagen o una instruccion. Si la entrada es vaga, la salida suele ser vaga.
+
+Mini demostracion:
+"Resume este articulo" produce algo generico.
+
+Mejor:
+Actua como docente investigador. Lee este resumen y produce:
+1. problema central
+2. metodo
+3. hallazgos
+4. limitaciones
+5. tres preguntas para seminario
+
+Regla para docentes:
+Antes de pedir respuesta, definan rol, contexto, tarea y formato.`
+      },
+      "ia-contexto": {
+        title: "Contexto: instrucciones y limites",
+        body: String.raw`Guion para explicar:
+
+El modelo usa el contexto disponible: lo que escribimos, los archivos cargados y, si esta habilitado, herramientas como busqueda web o analisis de datos.
+
+Prompt demostrativo:
+Actua como metodologo. Usa solo el texto que te pego. Si algo no esta en el texto, responde "no hay evidencia suficiente". Separa hechos, inferencias y recomendaciones.
+
+Mensaje clave:
+Cuanto mas importante sea la decision, mas explicitos deben ser los limites: fuentes permitidas, privacidad, tono, formato, criterio de evidencia.`
+      },
+      "ia-prediccion": {
+        title: "Generacion: texto probable, no verdad garantizada",
+        body: String.raw`Guion para explicar:
+
+Una IA generativa produce una salida plausible: texto, codigo, tabla, grafica, imagen o resumen. Plausible no significa verdadero.
+
+Ejemplo para mostrar:
+Pidan una referencia bibliografica muy especifica sin darle fuentes. Luego pidan:
+"No inventes referencias. Si no puedes verificar DOI, marca [DOI pendiente]".
+
+Mensaje clave:
+La IA acelera el borrador. La autoridad academica sigue estando en la verificacion del investigador.`
+      },
+      "ia-verificacion": {
+        title: "Verificacion: donde entra el criterio experto",
+        body: String.raw`Checklist de verificacion:
+
+1. La fuente existe?
+2. La cita corresponde a lo que afirma?
+3. El dato tiene fecha y origen?
+4. Hay sesgos culturales, disciplinares o de seleccion?
+5. Se subieron datos sensibles?
+6. El resultado es reproducible?
+7. La conclusion no excede el metodo?
+
+Prompt:
+Audita esta respuesta como par evaluador exigente. Identifica afirmaciones sin fuente, posibles alucinaciones, sesgos, riesgos eticos y mejoras necesarias antes de publicarla.`
+      },
+      "research-gpt": {
+        title: "GPT o Perplexity: consulta inicial con fuentes",
+        body: String.raw`Prompt:
+Usa busqueda web y actua como investigador social cuantitativo.
+
+Tema:
+Relacion entre PIB per capita y esperanza de vida usando datos Gapminder 2007.
+
+Entrega:
+1. Explica por que este tema es adecuado para una demostracion de analisis descriptivo.
+2. Identifica 5 fuentes confiables para contextualizar PIB, salud y desarrollo humano.
+3. Propone pregunta de investigacion, objetivo general y 3 objetivos especificos.
+4. Sugiere variables, grafica principal y limites metodologicos.
+5. Distingue claramente entre analisis descriptivo y explicacion causal.
+
+Reglas:
+- Cita enlaces.
+- No inventes estudios.
+- Si una fuente no es academica, dilo.`
+      },
+      "research-chatpdf": {
+        title: "ChatPDF o SciSpace: resumen para estado del arte",
+        body: String.raw`Prompt para pegar en ChatPDF o SciSpace:
+
+Explica este paper o informe para construir un estado del arte sobre desarrollo economico, salud poblacional y esperanza de vida.
+
+Necesito:
+1. Tesis central.
+2. Conceptos clave.
+3. Metodo o tipo de evidencia.
+4. Hallazgos relevantes para relacion PIB per capita - esperanza de vida.
+5. Limitaciones.
+6. Frases o secciones que debo verificar en el PDF antes de citar.
+7. Como conectarlo con un analisis descriptivo de Gapminder 2007.
+
+No inventes paginas ni citas textuales. Si no puedes ubicar algo, escribe [verificar en PDF].`
+      },
+      "research-elicit": {
+        title: "Elicit y Consensus: matriz de literatura",
+        body: String.raw`Prompt para Elicit / Consensus:
+
+Research question:
+What is the relationship between income, GDP per capita, and life expectancy across countries?
+
+Prioritize:
+- empirical studies
+- public health, economics, development studies
+- cross-country analyses
+- systematic reviews or influential reports
+
+Extract:
+1. Citation
+2. Research design
+3. Data source
+4. Countries or period
+5. Main finding
+6. Limitations
+7. Usefulness for interpreting a simple Gapminder 2007 scatterplot
+
+Important:
+Do not treat correlation as causation. Identify confounders such as education, inequality, health systems, conflict, and public policy.`
+      },
+      "research-zotero": {
+        title: "Zotero: referencias y BibTeX",
+        body: String.raw`Actividad:
+
+1. Crear coleccion: Gapminder PIB esperanza vida.
+2. Guardar fuentes:
+   - Gapminder dataset/documentacion.
+   - Informe de desarrollo humano o salud global.
+   - 2 articulos academicos sobre ingreso y esperanza de vida.
+   - 1 fuente metodologica sobre correlacion vs causalidad.
+3. Revisar metadatos: autor, año, titulo, fuente, DOI/URL.
+4. Exportar en BibTeX como references.bib.
+
+Prompt para limpiar BibTeX:
+Revisa este BibTeX. Detecta duplicados, campos faltantes y claves sucias. No inventes DOI ni paginas. Devuelve una version corregida solo con datos existentes.`
+      },
+      "research-colab": {
+        title: "Google Colab: codigo listo con datos reales",
+        body: String.raw`# Analisis descriptivo con datos reales Gapminder
+# Pegar en una celda de Google Colab
+
+import pandas as pd
+import plotly.express as px
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Dataset publico incluido en Plotly Express
+df = px.data.gapminder()
+
+# Filtrar año 2007
+df_2007 = df[df["year"] == 2007].copy()
+
+# Correlacion descriptiva
+corr = df_2007["gdpPercap"].corr(df_2007["lifeExp"])
+print(f"Correlacion PIB per capita vs esperanza de vida en 2007: {corr:.3f}")
+
+# Resumen por continente
+resumen = (
+    df_2007
+    .groupby("continent")
+    .agg(
+        paises=("country", "count"),
+        esperanza_media=("lifeExp", "mean"),
+        pib_mediano=("gdpPercap", "median"),
+        poblacion_total=("pop", "sum")
+    )
+    .sort_values("esperanza_media", ascending=False)
+)
+display(resumen)
+
+# Grafica principal
+fig = px.scatter(
+    df_2007,
+    x="gdpPercap",
+    y="lifeExp",
+    size="pop",
+    color="continent",
+    hover_name="country",
+    log_x=True,
+    title="PIB per capita y esperanza de vida por pais, 2007",
+    labels={
+        "gdpPercap": "PIB per capita (escala logaritmica)",
+        "lifeExp": "Esperanza de vida",
+        "continent": "Continente",
+        "pop": "Poblacion"
+    }
+)
+fig.show()
+
+# Version estatica para paper
+sns.set_theme(style="whitegrid")
+plt.figure(figsize=(10, 6))
+sns.scatterplot(
+    data=df_2007,
+    x="gdpPercap",
+    y="lifeExp",
+    hue="continent",
+    size="pop",
+    sizes=(20, 600),
+    alpha=0.72
+)
+plt.xscale("log")
+plt.title("PIB per capita y esperanza de vida por pais, 2007")
+plt.xlabel("PIB per capita (escala logaritmica)")
+plt.ylabel("Esperanza de vida")
+plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
+plt.tight_layout()
+plt.savefig("figura1_gapminder_2007.png", dpi=200)
+plt.show()
+
+print("Interpretacion breve:")
+print("Se observa una asociacion positiva entre PIB per capita y esperanza de vida.")
+print("El resultado es descriptivo y transversal; no permite afirmar causalidad.")
+print("La dispersion muestra que factores como politica publica, desigualdad y sistemas de salud tambien importan.")`
+      },
+      "research-claude": {
+        title: "Claude o GPT: armar paper en LaTeX",
+        body: String.raw`Prompt:
+Actua como editor academico y experto en LaTeX.
+
+Con esta informacion:
+- Pregunta: Que patron descriptivo se observa entre PIB per capita y esperanza de vida en paises de Gapminder en 2007?
+- Dataset: Gapminder, filtrado año 2007.
+- Metodo: analisis descriptivo, correlacion y grafica de dispersion con PIB en escala logaritmica.
+- Resultado esperado: asociacion positiva, con variacion por continente.
+- Limite: no causalidad, datos agregados por pais, corte transversal.
+- Figura: figura1_gapminder_2007.png
+- BibTeX: [pegar references.bib]
+
+Genera:
+1. main.tex completo.
+2. references.bib depurado.
+3. Declaracion de uso de IA.
+
+Reglas:
+- No inventes citas.
+- Usa [CITA PENDIENTE] donde falte fuente.
+- Incluye \includegraphics{figura1_gapminder_2007.png}.
+- Mantén tono academico sencillo.`
+      },
+      "research-gamma": {
+        title: "Gamma: del paper a presentacion",
+        body: String.raw`Prompt para Gamma:
+
+Crea una presentacion de 7 diapositivas basada en este miniarticulo:
+"PIB per capita y esperanza de vida: analisis descriptivo con datos Gapminder 2007"
+
+Audiencia:
+Docentes investigadores que estan aprendiendo a encadenar IA, datos y escritura academica.
+
+Estructura:
+1. Pregunta de investigacion.
+2. Por que Gapminder es buen ejemplo.
+3. Metodo reproducible en Colab.
+4. Grafica principal: PIB per capita vs esperanza de vida.
+5. Hallazgos descriptivos.
+6. Limitaciones: correlacion no es causalidad.
+7. Flujo de herramientas: GPT, SciSpace, Elicit, Zotero, Colab, Claude, Gamma.
+
+Estilo:
+Academico, limpio, pocas palabras, con una grafica dominante y notas del expositor.`
+      },
+      "research-canva": {
+        title: "Canva y Napkin: poster y diagrama",
+        body: String.raw`Prompt para Canva:
+Crea un poster academico horizontal sobre:
+"PIB per capita y esperanza de vida en Gapminder 2007"
+
+Secciones:
+- pregunta
+- datos
+- metodo
+- grafica principal
+- hallazgo descriptivo
+- limitaciones
+- flujo de herramientas IA
+
+Estilo: congreso academico, legible, sobrio, fondo claro.
+
+Prompt para Napkin:
+Convierte este flujo en diagrama:
+GPT consulta fuentes -> ChatPDF/SciSpace resume papers -> Elicit/Consensus crea matriz -> Zotero guarda referencias -> Colab analiza Gapminder -> Claude/GPT redacta LaTeX -> Gamma crea presentacion -> Canva produce poster.
+
+Usa un pipeline horizontal con ocho nodos y una nota final:
+"La IA acelera; el investigador verifica".`
+      }
+    };
+
+    const flowSteps = document.querySelectorAll(".flow-step");
+    const flowTitle = document.getElementById("flowTitle");
+    const flowSolution = document.getElementById("flowSolution");
+    const copyFlowSolution = document.getElementById("copyFlowSolution");
+    const togglePreview = document.getElementById("togglePreview");
+    const paperPreview = document.getElementById("paperPreview");
+
+    flowSteps.forEach((step) => {
+      step.addEventListener("click", () => {
+        const key = step.dataset.flow;
+        const solution = flowSolutions[key];
+        if (!solution) return;
+
+        flowSteps.forEach((item) => item.classList.remove("active"));
+        step.classList.add("active");
+        flowTitle.textContent = solution.title;
+        flowSolution.textContent = solution.body;
+      });
+    });
+
+    if (copyFlowSolution) {
+      copyFlowSolution.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(flowSolution.innerText);
+          copyFlowSolution.textContent = "Copiado";
+          setTimeout(() => {
+            copyFlowSolution.textContent = "Copiar solucion";
+          }, 1400);
+        } catch (error) {
+          copyFlowSolution.textContent = "Selecciona";
+        }
+      });
+    }
+
+    if (togglePreview && paperPreview) {
+      togglePreview.addEventListener("click", () => {
+        paperPreview.classList.toggle("open");
+        togglePreview.textContent = paperPreview.classList.contains("open")
+          ? "Ocultar preview del documento final"
+          : "Ver preview del documento final";
+      });
+    }
+
     const buttons = document.querySelectorAll("button.copy");
 
     buttons.forEach((button) => {
