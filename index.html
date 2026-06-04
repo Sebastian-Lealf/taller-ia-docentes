@@ -1,0 +1,1590 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Taller IA para docentes investigadores</title>
+  <style>
+    :root {
+      --ink: #191816;
+      --muted: #68625a;
+      --paper: #f7f2e8;
+      --panel: #fffaf0;
+      --line: #d8cbb8;
+      --green: #254c45;
+      --blue: #263f78;
+      --red: #9c3f2e;
+      --gold: #b88732;
+      --code: #171b20;
+      --codeLine: #2b3038;
+      --shadow: 0 22px 60px rgba(38, 32, 22, .14);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% 8%, rgba(184, 135, 50, .17), transparent 32rem),
+        linear-gradient(135deg, rgba(38, 76, 69, .11), transparent 32rem),
+        var(--paper);
+      font-family: "Segoe UI", Candara, Calibri, sans-serif;
+      line-height: 1.55;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .16;
+      background-image:
+        linear-gradient(rgba(25, 24, 22, .08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(25, 24, 22, .08) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, black, transparent 76%);
+    }
+
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 28px 22px;
+      border-right: 1px solid var(--line);
+      background: rgba(255, 250, 240, .76);
+      backdrop-filter: blur(16px);
+      overflow: auto;
+    }
+
+    .brand {
+      display: grid;
+      gap: 10px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand-mark {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: conic-gradient(from 180deg, var(--green), var(--blue), var(--red), var(--gold), var(--green));
+      border-radius: 6px;
+      font-family: Georgia, serif;
+      font-size: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    nav {
+      display: grid;
+      gap: 6px;
+      margin-top: 22px;
+    }
+
+    nav a {
+      display: block;
+      padding: 9px 10px;
+      color: var(--ink);
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    nav a:hover { background: rgba(38, 76, 69, .1); }
+
+    main { padding: 42px clamp(18px, 5vw, 68px) 80px; }
+
+    .hero {
+      min-height: 72vh;
+      display: grid;
+      align-content: center;
+      gap: 26px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 44px;
+    }
+
+    .eyebrow {
+      color: var(--red);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: .08em;
+    }
+
+    .hero h2 {
+      max-width: 970px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(44px, 7vw, 92px);
+      line-height: .94;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 800px;
+      margin: 0;
+      color: #453f37;
+      font-size: 19px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 950px;
+    }
+
+    .stat {
+      min-height: 116px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, .72);
+      border-radius: 8px;
+    }
+
+    .stat strong {
+      display: block;
+      font-family: Georgia, serif;
+      font-size: 28px;
+      color: var(--green);
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    section {
+      padding: 44px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h3 {
+      margin: 0 0 14px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    h4 {
+      margin: 26px 0 10px;
+      font-size: 18px;
+      color: var(--green);
+    }
+
+    .lede {
+      max-width: 860px;
+      color: #4f493f;
+      font-size: 18px;
+      margin: 0 0 24px;
+    }
+
+    .band {
+      padding: 18px;
+      border-left: 5px solid var(--green);
+      background: rgba(255, 250, 240, .72);
+      margin: 18px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 250, 240, .82);
+      min-height: 160px;
+    }
+
+    .card h4 { margin-top: 0; }
+    .card p { color: var(--muted); margin: 8px 0; }
+    .card .tag { color: var(--red); font-weight: 800; font-size: 12px; text-transform: uppercase; }
+
+    .prompt {
+      margin: 18px 0;
+      border: 1px solid #303846;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--code);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, .16);
+    }
+
+    .prompt header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      background: var(--codeLine);
+      color: #f4eadb;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    button.copy {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, .24);
+      color: #fff6e7;
+      background: rgba(255, 255, 255, .08);
+      border-radius: 5px;
+      padding: 7px 10px;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button.copy:hover { background: rgba(255, 255, 255, .18); }
+
+    pre {
+      margin: 0;
+      padding: 16px;
+      overflow: auto;
+      color: #f1eadf;
+      font: 13px/1.5 Consolas, "Courier New", monospace;
+      white-space: pre-wrap;
+    }
+
+    .schedule {
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr);
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255, 250, 240, .82);
+    }
+
+    .schedule div { padding: 12px; border-bottom: 1px solid var(--line); }
+    .schedule div:nth-child(odd) { font-weight: 800; color: var(--red); background: rgba(156, 63, 46, .07); }
+    .schedule div:nth-last-child(-n + 2) { border-bottom: 0; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 250, 240, .82);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      display: block;
+    }
+
+    thead, tbody, tr { display: table; width: 100%; table-layout: fixed; }
+    th, td { padding: 11px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 14px; }
+    th { text-align: left; color: var(--green); background: rgba(37, 76, 69, .08); }
+    tr:last-child td { border-bottom: 0; }
+
+    .ethics li, .steps li { margin-bottom: 8px; }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding-top: 26px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .deerflow {
+      color: var(--muted);
+      text-decoration: none;
+      opacity: .75;
+    }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      aside { position: relative; height: auto; }
+      nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero-grid, .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      main { padding: 24px 15px 54px; }
+      nav, .hero-grid, .tools-grid { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding-top: 18px; }
+      table { overflow-x: auto; }
+      thead, tbody, tr { min-width: 760px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside>
+      <div class="brand">
+        <div class="brand-mark">IA</div>
+        <h1>Laboratorio IA para docentes investigadores</h1>
+        <p>Guion listo para copiar, pegar, demostrar y adaptar en vivo.</p>
+      </div>
+      <nav aria-label="Navegacion del taller">
+        <a href="#introduccion-ia">IA y prompts</a>
+        <a href="#agenda">Agenda</a>
+        <a href="#herramientas">Herramientas</a>
+        <a href="#flujo-paper">Flujo paper completo</a>
+        <a href="#chatgpt">ChatGPT + Colab</a>
+        <a href="#objetivos">Objetivos y rubricas</a>
+        <a href="#gamma">Gamma</a>
+        <a href="#visuales">Canva y Napkin</a>
+        <a href="#notebooklm">NotebookLM</a>
+        <a href="#claude">Claude con archivos</a>
+        <a href="#busqueda">Busqueda academica</a>
+        <a href="#papers">Elicit, Consensus, SciSpace</a>
+        <a href="#zotero-latex">Zotero y LaTeX</a>
+        <a href="#imagenes">Imagenes didacticas</a>
+        <a href="#etica">Etica</a>
+      </nav>
+    </aside>
+
+    <main>
+      <section class="hero" id="inicio">
+        <div class="eyebrow">Conferencia practica para manana</div>
+        <h2>IA aplicada a docencia, investigacion y produccion academica.</h2>
+        <p>La idea no es mostrar magia. Es mostrar flujos de trabajo repetibles: preguntar mejor, verificar, sintetizar, visualizar datos, producir materiales didacticos y ahorrar tiempo sin renunciar al criterio investigador.</p>
+        <div class="hero-grid">
+          <div class="stat"><strong>11</strong><span>estaciones de taller con prompts listos</span></div>
+          <div class="stat"><strong>1</strong><span>dataset educativo para copiar y graficar</span></div>
+          <div class="stat"><strong>20+</strong><span>herramientas utiles para investigadores</span></div>
+          <div class="stat"><strong>90 min</strong><span>formato recomendado para demostracion</span></div>
+        </div>
+      </section>
+
+      <section id="introduccion-ia">
+        <h3>Antes de empezar: que son estas herramientas y que es un prompt</h3>
+        <p class="lede">Esta introduccion sirve para nivelar al grupo. La idea central es simple: una herramienta de IA no es "mejor" en abstracto. Es mejor o peor segun la tarea, el tipo de archivo, la necesidad de fuentes, la privacidad, el presupuesto y el nivel de control que requiere el investigador.</p>
+
+        <div class="band">
+          <strong>Frase para abrir:</strong> "No vamos a escoger una IA ganadora. Vamos a escoger la herramienta correcta para cada momento del trabajo academico: explorar, leer, analizar, escribir, visualizar, citar y presentar".
+        </div>
+
+        <h4>Que es una herramienta de IA aplicada</h4>
+        <p class="lede">Es una aplicacion que usa modelos de inteligencia artificial para ayudar en una tarea concreta: conversar, resumir, programar, buscar evidencia, crear imagenes, generar diapositivas, analizar datos o transformar texto en diagramas. En investigacion, su valor no esta en "hacer el trabajo por nosotros", sino en acelerar borradores, organizar informacion y abrir caminos que luego el experto verifica.</p>
+
+        <table>
+          <thead>
+            <tr><th>Necesidad</th><th>Herramientas utiles</th><th>Por que sirven</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Chat general, ideas, redaccion, datos y codigo</td><td>ChatGPT</td><td>Versatil para conversar, analizar archivos, generar codigo, explicar y producir borradores.</td></tr>
+            <tr><td>Lectura extensa, documentos largos, escritura academica y codigo</td><td>Claude</td><td>Muy fuerte para procesar mucho texto, comparar documentos, mantener tono y trabajar con artefactos o codigo.</td></tr>
+            <tr><td>Trabajo dentro de ecosistema Google e imagenes</td><td>Gemini, NotebookLM</td><td>Gemini ayuda en tareas multimodales; NotebookLM trabaja anclado a fuentes cargadas por el usuario.</td></tr>
+            <tr><td>Buscar respuestas con fuentes actuales</td><td>Perplexity, ChatGPT con busqueda</td><td>Buenos para exploracion rapida con enlaces; siempre hay que verificar fuentes primarias.</td></tr>
+            <tr><td>Revision de literatura cientifica</td><td>Elicit, Consensus, SciSpace</td><td>Diseñadas para encontrar, explicar y extraer informacion de papers.</td></tr>
+            <tr><td>Presentaciones y material visual</td><td>Gamma, Canva, Napkin</td><td>Transforman contenido en diapositivas, infografias, posters, diagramas o mapas conceptuales.</td></tr>
+            <tr><td>Bibliografia verificable</td><td>Zotero</td><td>No es un chatbot, pero es clave para evitar citas falsas, ordenar PDFs y exportar BibTeX/RIS.</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Que es un prompt</h4>
+        <p class="lede">Un prompt es una instruccion escrita que le dice a la IA que debe hacer, con que contexto, bajo que criterios y en que formato debe responder. Un buen prompt reduce ambiguedad; no garantiza verdad. Por eso debe combinarse con verificacion experta.</p>
+
+        <div class="grid">
+          <article class="card">
+            <span class="tag">Prompt debil</span>
+            <h4>"Hazme un resumen"</h4>
+            <p>Es ambiguo: no dice para quien, de que extension, con que enfoque, si debe citar, si debe criticar o si debe conservar terminos tecnicos.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Prompt fuerte</span>
+            <h4>Rol + contexto + tarea + formato</h4>
+            <p>Define el papel de la IA, el publico, los criterios de calidad, los limites y la forma exacta de salida.</p>
+          </article>
+        </div>
+
+        <h4>Partes de un buen prompt</h4>
+        <table>
+          <thead>
+            <tr><th>Parte</th><th>Pregunta que responde</th><th>Ejemplo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Rol</td><td>Desde que perspectiva debe responder?</td><td>Actua como metodologo de investigacion educativa.</td></tr>
+            <tr><td>Contexto</td><td>Que informacion necesita conocer?</td><td>Curso de maestria, docentes investigadores, Colombia.</td></tr>
+            <tr><td>Tarea</td><td>Que debe producir?</td><td>Formula pregunta, objetivos, variables y metodo.</td></tr>
+            <tr><td>Criterios</td><td>Que cuenta como buena respuesta?</td><td>No inventes citas; separa evidencia de inferencia.</td></tr>
+            <tr><td>Formato</td><td>Como debe entregar?</td><td>Tabla con columnas: autor, metodo, muestra, hallazgos.</td></tr>
+            <tr><td>Restricciones</td><td>Que debe evitar?</td><td>No uses lenguaje publicitario; no incluyas datos personales.</td></tr>
+            <tr><td>Iteracion</td><td>Como se mejora la respuesta?</td><td>Ahora reduce a 200 palabras y agrega limitaciones.</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Plantilla universal de prompt</h4>
+        <div class="prompt">
+          <header><span>Plantilla para cualquier herramienta</span><button class="copy">Copiar</button></header>
+          <pre>Actua como [rol experto].
+
+Contexto:
+[curso, proyecto, audiencia, disciplina, pais, nivel academico]
+
+Objetivo:
+[que quiero lograr con esta respuesta]
+
+Material disponible:
+[pegar texto, datos, resumen, tabla, enlace o descripcion de archivos]
+
+Tareas:
+1. [tarea concreta]
+2. [tarea concreta]
+3. [tarea concreta]
+
+Criterios de calidad:
+- No inventes datos, citas, autores ni DOI.
+- Separa hechos, inferencias y recomendaciones.
+- Si falta informacion, marca [dato faltante].
+- Usa lenguaje academico claro.
+
+Formato de salida:
+[tabla, lista, esquema, codigo, diapositivas, LaTeX, CSV, rubrica, etc.]
+
+Restricciones:
+[extension, tono, publico, idioma, fuentes permitidas, elementos prohibidos]</pre>
+        </div>
+
+        <h4>Prompt de demostracion para enseñar a preguntar mejor</h4>
+        <div class="prompt">
+          <header><span>Mejora mi prompt</span><button class="copy">Copiar</button></header>
+          <pre>Actua como entrenador de prompting para docentes investigadores.
+
+Voy a darte un prompt inicial. Tu tarea es:
+1. Diagnosticar que le falta.
+2. Explicar por que puede producir una respuesta mediocre.
+3. Reescribirlo en una version avanzada.
+4. Crear una version corta para usar en vivo.
+5. Crear una version exigente para investigacion academica.
+
+Prompt inicial:
+[pegar prompt del docente]
+
+No respondas la tarea del prompt todavia; primero mejora el prompt.</pre>
+        </div>
+
+        <h4>Comparativa practica: cual usar?</h4>
+        <table>
+          <thead>
+            <tr><th>Herramienta</th><th>Fortalezas</th><th>Limitaciones</th><th>Plan gratis sirve para...</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ChatGPT</td><td>Uso general, archivos, datos, codigo, imagenes, redaccion, razonamiento.</td><td>Los limites de archivos, modelos y analisis dependen del plan.</td><td>Demostraciones, prompts basicos, busqueda y analisis limitado.</td></tr>
+            <tr><td>Claude</td><td>Documentos largos, escritura cuidada, comparacion de textos, codigo y proyectos.</td><td>Puede tener limites de uso; algunas funciones dependen del plan y region.</td><td>Lectura y redaccion ocasional con limites.</td></tr>
+            <tr><td>Gemini</td><td>Multimodal, integracion con Google, imagen, video y apoyo en Workspace.</td><td>Limites y funciones cambian segun plan, pais y cuenta personal/institucional.</td><td>Consultas generales e integracion basica si esta disponible.</td></tr>
+            <tr><td>NotebookLM</td><td>Respuestas basadas en fuentes cargadas, resumenes, audio y cuadernos por proyecto.</td><td>No reemplaza lectura critica; conviene verificar fragmentos originales.</td><td>Cuadernos pequenos para clase o revision preliminar.</td></tr>
+            <tr><td>Perplexity</td><td>Busqueda con fuentes, espacios de investigacion, actualidad y comparacion rapida.</td><td>Puede mezclar fuentes de distinta calidad; hay que filtrar academicamente.</td><td>Exploracion inicial y preguntas con citas.</td></tr>
+            <tr><td>Elicit</td><td>Revision de literatura, extraccion de datos y screening de papers.</td><td>Los flujos fuertes de revision sistematica suelen requerir plan pago.</td><td>Busqueda, resumenes y primeras matrices de literatura.</td></tr>
+            <tr><td>Consensus</td><td>Preguntas respondidas con literatura cientifica y analisis de papers.</td><td>Mensajes profundos y revisiones avanzadas tienen limites.</td><td>Buscar papers y validar si hay evidencia inicial.</td></tr>
+            <tr><td>SciSpace</td><td>Explicar papers, metodos, conceptos, tablas y secciones densas.</td><td>Puede depender de creditos o limites; verificar siempre en el PDF.</td><td>Lectura asistida de articulos concretos.</td></tr>
+            <tr><td>Gamma</td><td>Presentaciones, documentos y paginas desde prompts o archivos.</td><td>El plan gratis usa creditos y puede conservar marca.</td><td>Crear un primer borrador de diapositivas.</td></tr>
+            <tr><td>Canva</td><td>Infografias, posters, visuales para clase, plantillas y AI de diseno.</td><td>Funciones premium, almacenamiento y AI avanzado dependen del plan.</td><td>Diseños basicos, infografias simples y piezas de clase.</td></tr>
+            <tr><td>Napkin</td><td>Diagramas, mapas conceptuales y visuales desde texto.</td><td>Exportaciones avanzadas y estilos de marca suelen ser de pago.</td><td>Generar diagramas ligeros rapidamente.</td></tr>
+            <tr><td>Zotero</td><td>Gestion bibliografica, PDFs, citas, BibTeX/RIS, grupos.</td><td>No redacta ni verifica automaticamente la calidad metodologica.</td><td>Bibliografia seria sin depender de citas inventadas.</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Comparativa de planes y precios orientativa</h4>
+        <p class="lede">Precios revisados el 4 de junio de 2026. Pueden variar por pais, impuestos, moneda, promociones, cuenta educativa o facturacion mensual/anual. Para una compra institucional, confirma siempre en la pagina oficial antes de prometer costos.</p>
+        <table>
+          <thead>
+            <tr><th>Herramienta</th><th>Gratis</th><th>Pago individual publicado</th><th>Cuando pagar tiene sentido</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ChatGPT</td><td>Si, con limites.</td><td>Plus US$20/mes; Pro US$200/mes; Team desde US$25-30 usuario/mes.</td><td>Archivos, analisis de datos, imagenes, modelos avanzados, trabajo frecuente.</td></tr>
+            <tr><td>Claude</td><td>Si, limitado.</td><td>Pro US$20/mes; Max US$100 o US$200/mes segun capacidad.</td><td>Lectura extensa, escritura academica frecuente, codigo y proyectos largos.</td></tr>
+            <tr><td>Gemini</td><td>Si.</td><td>Google AI Pro/Ultra: precio y limites dependen del pais y Google One.</td><td>Trabajo integrado con Google, NotebookLM avanzado, imagen/video y mayor capacidad.</td></tr>
+            <tr><td>Perplexity</td><td>Si.</td><td>Max US$200/mes o US$2.000/año; Pro debe verificarse en cuenta local.</td><td>Investigacion con fuentes actuales, espacios, busqueda profunda y usuarios intensivos.</td></tr>
+            <tr><td>Gamma</td><td>Si, 400 creditos iniciales.</td><td>Planes Free, Plus, Pro, Ultra, Team y Business; revisar precio vigente en checkout.</td><td>Quitar marca, mas tarjetas por prompt, modelos premium, marca, analitica y API.</td></tr>
+            <tr><td>Canva</td><td>Si.</td><td>Pro US$144/año para una persona en pagina oficial de EE. UU.; Education puede ser gratis para elegibles.</td><td>Plantillas premium, marca, almacenamiento, herramientas avanzadas y colaboracion.</td></tr>
+            <tr><td>Napkin</td><td>Si, 500 creditos/semana.</td><td>Plus US$9 persona/mes; Pro US$22 persona/mes.</td><td>Mas creditos, exportar PPT/SVG, quitar marca y estilos de marca.</td></tr>
+            <tr><td>Elicit</td><td>Si.</td><td>Plus desde US$7/mes anual; Pro desde US$29/mes anual en vista Industry; otras vistas muestran precios distintos.</td><td>Revisiones sistematicas, exportaciones, mas columnas, mas reportes y colaboracion.</td></tr>
+            <tr><td>Consensus</td><td>Si.</td><td>Pro US$15/mes o US$120/año; API desde US$0.10 por llamada mas fee.</td><td>Mas mensajes Pro, Deep reviews, snapshots y busqueda academica intensiva.</td></tr>
+            <tr><td>SciSpace</td><td>Si, segun limites vigentes.</td><td>Precio no estable en fuentes oficiales capturables; verificar en checkout.</td><td>Lectura intensiva de papers, copilot, exportaciones y revisiones profundas.</td></tr>
+            <tr><td>Zotero</td><td>Si.</td><td>La app es gratis; almacenamiento en nube adicional es opcional.</td><td>Si se comparten muchos PDFs o bibliotecas grupales grandes.</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Fuentes de precios y planes</h4>
+        <p class="lede">Referencias oficiales o de ayuda: <a href="https://openai.com/chatgpt/pricing" target="_blank">ChatGPT pricing</a>, <a href="https://support.anthropic.com/en/articles/11049762-choosing-a-claude-ai-plan" target="_blank">Claude plans</a>, <a href="https://gemini.google/us/subscriptions/?hl=en" target="_blank">Google AI subscriptions</a>, <a href="https://www.perplexity.ai/help-center/de/articles/11680686-perplexity-max" target="_blank">Perplexity Max</a>, <a href="https://gamma.app/es/pricing" target="_blank">Gamma pricing</a>, <a href="https://www.canva.com/pricing/" target="_blank">Canva pricing</a>, <a href="https://www.napkin.ai/pricing/" target="_blank">Napkin pricing</a>, <a href="https://elicit.com/pricing" target="_blank">Elicit pricing</a> y <a href="https://help.consensus.app/en/articles/10087865-subscription-plans" target="_blank">Consensus plans</a>.</p>
+      </section>
+
+      <section id="agenda">
+        <h3>Agenda sugerida</h3>
+        <p class="lede">Puedes usar esta estructura tal cual si tienes entre 75 y 100 minutos. Si tienes menos tiempo, ejecuta solo las estaciones 1, 3, 5 y 7.</p>
+        <div class="schedule">
+          <div>0-8 min</div><div>Apertura: que puede y que no debe delegarse a IA en investigacion.</div>
+          <div>8-25 min</div><div>ChatGPT con datos: pegar CSV, pedir analisis, pedir codigo para Google Colab y leer una grafica.</div>
+          <div>25-37 min</div><div>ChatGPT para objetivos, rubricas, instrumentos y retroalimentacion docente.</div>
+          <div>37-48 min</div><div>Gamma: transformar un tema academico en una presentacion clara y visual.</div>
+          <div>48-60 min</div><div>NotebookLM o Claude: trabajar con PDFs, apuntes y archivos propios.</div>
+          <div>60-75 min</div><div>Busqueda academica: Elicit, Consensus, Perplexity y SciSpace.</div>
+          <div>75-90 min</div><div>Imagenes didacticas con Gemini/ChatGPT y cierre etico con checklist.</div>
+        </div>
+      </section>
+
+      <section id="herramientas">
+        <h3>Mapa de herramientas</h3>
+        <p class="lede">Selecciona segun el problema, no segun la moda. Esta lista esta pensada para docentes e investigadores de alto nivel que necesitan trazabilidad, fuentes y control.</p>
+        <div class="tools-grid">
+          <article class="card">
+            <span class="tag">Analisis y escritura</span>
+            <h4><a href="https://chatgpt.com" target="_blank">ChatGPT</a></h4>
+            <p>Analiza archivos, crea tablas y graficas, ayuda a redactar, depurar argumentos y generar codigo para Python o Colab.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Archivos largos</span>
+            <h4><a href="https://claude.ai" target="_blank">Claude</a></h4>
+            <p>Bueno para leer documentos extensos, comparar versiones, crear matrices de evidencia y redactar con instrucciones de estilo.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Google Workspace</span>
+            <h4><a href="https://gemini.google.com" target="_blank">Gemini</a></h4>
+            <p>Util para investigacion multimodal, imagenes, integracion con ecosistema Google y apoyo en documentos, hojas y correos.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Fuentes propias</span>
+            <h4><a href="https://notebooklm.google" target="_blank">NotebookLM</a></h4>
+            <p>Trabaja con PDFs, Docs, Slides, URLs, YouTube y audio. Ideal para construir un cuaderno basado en fuentes verificables.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Presentaciones</span>
+            <h4><a href="https://gamma.app" target="_blank">Gamma</a></h4>
+            <p>Genera presentaciones, documentos y paginas a partir de prompts, esquemas, archivos o URLs.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Busqueda con citas</span>
+            <h4><a href="https://www.perplexity.ai" target="_blank">Perplexity</a></h4>
+            <p>Respuestas con fuentes, espacios de investigacion, busqueda web y academica, archivos y conectores en planes empresariales.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Revision sistematica</span>
+            <h4><a href="https://elicit.com" target="_blank">Elicit</a></h4>
+            <p>Busca literatura, filtra articulos, extrae datos y ayuda a construir revisiones sistematicas o estados del arte.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Evidencia cientifica</span>
+            <h4><a href="https://consensus.app" target="_blank">Consensus</a></h4>
+            <p>Motor de busqueda academica con respuestas basadas en papers, grafo de citas, biblioteca y analisis de articulos.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Lectura de papers</span>
+            <h4><a href="https://scispace.com" target="_blank">SciSpace</a></h4>
+            <p>Explica papers, conversa con PDFs, ayuda a entender metodos, ecuaciones y conceptos densos.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Bibliografia</span>
+            <h4><a href="https://www.zotero.org" target="_blank">Zotero</a></h4>
+            <p>Gestor bibliografico. No es IA generativa por si mismo, pero es clave para ordenar evidencia y exportar BibTeX/RIS.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Diseno visual</span>
+            <h4><a href="https://www.canva.com" target="_blank">Canva</a></h4>
+            <p>Materiales didacticos, infografias, piezas para clase, plantillas y funciones de IA para diseno.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Diagramas</span>
+            <h4><a href="https://www.napkin.ai" target="_blank">Napkin AI</a></h4>
+            <p>Convierte texto en esquemas visuales, diagramas y mapas conceptuales para explicar ideas complejas.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="flujo-paper">
+        <h3>Flujo completo: de una idea a paper, graficas y presentacion</h3>
+        <p class="lede">Este es el hilo narrativo mas potente para la conferencia: no mostrar herramientas aisladas, sino una cadena de trabajo academico. Puedes decirles: "vamos a producir un miniarticulo verificable, con datos, graficas, bibliografia, LaTeX y diapositivas".</p>
+        <div class="schedule">
+          <div>Paso 1</div><div><strong>GPT con internet o Perplexity:</strong> explorar el tema, localizar datos recientes, autores, cifras y debates. Resultado: pregunta inicial y mapa del problema.</div>
+          <div>Paso 2</div><div><strong>Elicit / Consensus / SciSpace:</strong> buscar papers, extraer evidencia y construir estado del arte. Resultado: matriz de literatura.</div>
+          <div>Paso 3</div><div><strong>Zotero:</strong> guardar referencias, revisar metadatos, generar BibTeX o RIS. Resultado: biblioteca trazable.</div>
+          <div>Paso 4</div><div><strong>ChatGPT / Claude:</strong> generar o limpiar dataset demostrativo, definir variables y limites. Resultado: CSV listo.</div>
+          <div>Paso 5</div><div><strong>Google Colab:</strong> analizar datos y producir graficas reproducibles. Resultado: PNGs, hallazgos y codigo.</div>
+          <div>Paso 6</div><div><strong>Claude / ChatGPT:</strong> integrar literatura, metodo, resultados y discusion. Resultado: borrador academico.</div>
+          <div>Paso 7</div><div><strong>ChatGPT / Claude:</strong> exportar a LaTeX con secciones, tablas, figuras y referencias BibTeX. Resultado: main.tex + references.bib.</div>
+          <div>Paso 8</div><div><strong>Gamma / Canva / Napkin:</strong> convertir el paper en presentacion, infografias y diagramas para clase. Resultado: material de socializacion.</div>
+        </div>
+
+        <h4>Prompt 0: disenar el proyecto demostrativo</h4>
+        <div class="prompt">
+          <header><span>Prompt matriz del flujo completo</span><button class="copy">Copiar</button></header>
+          <pre>Actua como director metodologico de un miniarticulo academico demostrativo.
+
+Tema general:
+Uso de inteligencia artificial generativa por docentes universitarios para mejorar docencia, investigacion y produccion de materiales.
+
+Necesito que disenes un proyecto corto que podamos ejecutar en un taller:
+1. Titulo tentativo del articulo.
+2. Problema de investigacion en 120 palabras.
+3. Pregunta de investigacion.
+4. Objetivo general y 3 objetivos especificos.
+5. Variables o categorias posibles.
+6. Dataset demostrativo que podriamos generar o recolectar.
+7. Graficas recomendadas.
+8. Estructura IMRyD del paper: introduccion, metodo, resultados y discusion.
+9. Que tareas conviene hacer con GPT, Claude, Elicit, Consensus, SciSpace, Zotero, Colab, Gamma, Canva y Napkin.
+10. Riesgos eticos y limites del ejercicio.
+
+No presentes el ejercicio como investigacion concluyente. Debe quedar claro que es una demostracion formativa.</pre>
+        </div>
+
+        <h4>Prompt 1: GPT con internet para contexto reciente</h4>
+        <div class="prompt">
+          <header><span>Busqueda inicial con internet</span><button class="copy">Copiar</button></header>
+          <pre>Usa busqueda web y actua como investigador academico.
+
+Tema:
+Impacto de la inteligencia artificial generativa en practicas docentes e investigativas universitarias, con interes en America Latina y Colombia.
+
+Entrega:
+1. Panorama breve del tema con fecha de consulta.
+2. 8 hallazgos recientes con enlaces.
+3. Diferencia entre evidencia empirica, opinion institucional y noticia.
+4. 5 preguntas de investigacion viables.
+5. 10 palabras clave en espanol y 10 en ingles.
+6. Recomendacion de bases o fuentes para profundizar.
+
+Reglas:
+- Cita enlaces verificables.
+- No inventes estudios.
+- Marca claramente cuando una afirmacion proviene de una fuente no academica.
+- Prioriza fuentes 2023-2026, pero incluye clasicos si son necesarios.</pre>
+        </div>
+
+        <h4>Prompt 2: generar dataset demostrativo robusto</h4>
+        <div class="prompt">
+          <header><span>Dataset sintetico para taller</span><button class="copy">Copiar</button></header>
+          <pre>Genera un dataset sintetico en CSV para una demostracion academica.
+
+Tema:
+Docentes universitarios que usan IA generativa en docencia e investigacion.
+
+Condiciones:
+- 80 filas.
+- Variables: id_docente, pais, region, area, tipo_institucion, experiencia_anios, uso_ia_previo, frecuencia_uso_semana, tarea_principal, horas_ahorradas_semana, calidad_material_1a5, confianza_1a5, preocupacion_etica_1a5, intencion_continuar_1a5.
+- Debe haber variacion realista entre areas y niveles de uso previo.
+- No incluyas nombres reales, correos, instituciones ni datos personales.
+- Agrega algunos patrones plausibles, por ejemplo: mayor uso previo puede asociarse con mas horas ahorradas, pero tambien con mayor conciencia de riesgos.
+- Entrega solo el CSV, sin explicaciones.
+
+Despues de entregar el CSV, esperare un segundo prompt para pedir el analisis.</pre>
+        </div>
+
+        <h4>Prompt 3: convertir hallazgos en narrativa de articulo</h4>
+        <div class="prompt">
+          <header><span>De analisis a borrador academico</span><button class="copy">Copiar</button></header>
+          <pre>Con la matriz de literatura, el dataset, las graficas y los hallazgos descriptivos que ya generamos, redacta un borrador academico breve.
+
+Estructura:
+1. Titulo
+2. Resumen de 180-220 palabras
+3. Palabras clave
+4. Introduccion
+5. Estado del arte sintetico
+6. Metodo
+7. Resultados descriptivos
+8. Discusion
+9. Limitaciones
+10. Conclusiones
+11. Declaracion de uso de IA
+
+Reglas:
+- No inventes citas ni resultados.
+- Donde falte una cita, escribe [CITA PENDIENTE].
+- Donde vaya una figura, escribe [FIGURA 1: descripcion].
+- Mantén tono academico sobrio.
+- Aclara que el dataset es sintetico si fue generado para el taller.
+- No exageres causalidad: usa "se observa", "sugiere", "en este ejercicio descriptivo".</pre>
+        </div>
+      </section>
+
+      <section id="chatgpt">
+        <h3>Estacion 1: ChatGPT + Google Colab con datos</h3>
+        <p class="lede">Objetivo: demostrar que la IA puede pasar de un dataset crudo a preguntas, graficas, interpretacion y codigo reproducible. Primero pega el CSV en ChatGPT. Luego pide codigo para Colab.</p>
+
+        <h4>Dataset para copiar y pegar</h4>
+        <div class="prompt">
+          <header><span>impacto_taller_ia_docentes.csv</span><button class="copy">Copiar</button></header>
+          <pre>docente_id,area,region,tipo_institucion,experiencia_anios,uso_ia_previo,horas_ahorradas_semana,calidad_material_1a5,confianza_1a5,actividad,resultado_aprendizaje_1a5,riesgo_etico_1a5
+D001,Salud,Antioquia,Publica,18,Bajo,2.5,4,3,Revision literatura,4,3
+D002,Educacion,Bogota,Privada,11,Medio,4.0,5,4,Rubrica,5,2
+D003,Ingenieria,Valle,Publica,22,Bajo,3.0,4,3,Analisis datos,4,3
+D004,Ciencias sociales,Santander,Publica,15,Medio,3.5,4,4,Estado del arte,4,3
+D005,Artes,Bogota,Privada,9,Alto,5.5,5,5,Imagen didactica,5,2
+D006,Salud,Atlantico,Publica,20,Bajo,2.0,3,3,Instrumento encuesta,3,4
+D007,Educacion,Narino,Publica,13,Medio,4.5,5,4,Planeacion clase,5,2
+D008,Ingenieria,Antioquia,Privada,7,Alto,6.0,5,5,Codigo Python,5,2
+D009,Ciencias basicas,Bogota,Publica,26,Bajo,2.5,4,3,Visualizacion,4,3
+D010,Ciencias sociales,Valle,Privada,16,Medio,4.0,4,4,Analisis cualitativo,4,3
+D011,Salud,Santander,Privada,12,Medio,3.5,4,4,Resumen papers,4,2
+D012,Educacion,Antioquia,Publica,24,Bajo,3.0,4,3,Retroalimentacion,4,3
+D013,Ingenieria,Bogota,Publica,19,Medio,5.0,5,4,Simulacion,5,2
+D014,Artes,Valle,Publica,8,Alto,6.5,5,5,Guion audiovisual,5,2
+D015,Ciencias basicas,Santander,Publica,21,Bajo,2.0,3,3,Banco preguntas,3,4
+D016,Educacion,Atlantico,Privada,10,Medio,4.0,5,4,Diseno taller,5,2
+D017,Salud,Narino,Publica,17,Bajo,2.5,4,3,Protocolo investigacion,4,3
+D018,Ingenieria,Valle,Privada,14,Alto,6.0,5,5,Analisis datos,5,2
+D019,Ciencias sociales,Bogota,Publica,23,Medio,3.5,4,4,Codificacion entrevistas,4,3
+D020,Ciencias basicas,Antioquia,Privada,6,Alto,5.5,5,5,Explicacion concepto,5,2
+D021,Educacion,Santander,Publica,28,Bajo,2.0,3,2,Rubrica,3,4
+D022,Salud,Bogota,Privada,15,Medio,4.5,5,4,Revision literatura,5,2
+D023,Ingenieria,Atlantico,Publica,12,Medio,4.0,4,4,Codigo Python,4,3
+D024,Artes,Narino,Publica,18,Bajo,3.0,4,3,Imagen didactica,4,3
+D025,Ciencias sociales,Antioquia,Privada,9,Alto,6.0,5,5,Presentacion,5,2
+D026,Ciencias basicas,Valle,Publica,25,Bajo,2.5,4,3,Visualizacion,4,3
+D027,Educacion,Bogota,Publica,20,Medio,4.5,5,4,Planeacion clase,5,2
+D028,Salud,Santander,Publica,13,Bajo,2.5,3,3,Instrumento encuesta,3,4
+D029,Ingenieria,Antioquia,Privada,11,Alto,6.5,5,5,Simulacion,5,2
+D030,Ciencias sociales,Atlantico,Publica,16,Medio,3.5,4,4,Estado del arte,4,3
+D031,Artes,Bogota,Privada,7,Alto,5.0,5,5,Guion audiovisual,5,2
+D032,Ciencias basicas,Narino,Publica,27,Bajo,2.0,3,2,Banco preguntas,3,4</pre>
+        </div>
+
+        <h4>Prompt 1: pedir analisis inicial en ChatGPT</h4>
+        <div class="prompt">
+          <header><span>Prompt para ChatGPT</span><button class="copy">Copiar</button></header>
+          <pre>Actua como analista de datos educativos y asesor de investigacion. Te pego un CSV sobre docentes que participaron en un taller de IA.
+
+Tareas:
+1. Limpia mentalmente el dataset y explica que variables contiene.
+2. Propone 5 preguntas de investigacion que se puedan responder con estos datos.
+3. Calcula tendencias descriptivas: promedio de horas ahorradas, calidad percibida, confianza y riesgo etico.
+4. Compara los resultados por area y por nivel de uso previo de IA.
+5. Recomienda 3 graficas utiles y explica que mostraria cada una.
+6. Escribe una interpretacion breve para docentes investigadores, aclarando limites del dataset.
+
+No inventes datos. Si haces supuestos, marcalos como supuestos.</pre>
+        </div>
+
+        <h4>Prompt 2: pedir codigo para Google Colab</h4>
+        <div class="prompt">
+          <header><span>Prompt para codigo reproducible</span><button class="copy">Copiar</button></header>
+          <pre>Ahora generame codigo Python listo para Google Colab.
+
+Condiciones:
+1. El codigo debe crear el DataFrame pegando el CSV como texto dentro de una variable.
+2. Usa pandas, matplotlib y seaborn.
+3. Genera estas graficas:
+   - barras: promedio de horas ahorradas por area
+   - boxplot: horas ahorradas por uso_ia_previo
+   - mapa de calor: correlacion entre experiencia_anios, horas_ahorradas_semana, calidad_material_1a5, confianza_1a5, resultado_aprendizaje_1a5 y riesgo_etico_1a5
+4. Incluye comentarios para que un docente pueda explicar cada paso.
+5. Al final imprime 5 hallazgos en lenguaje claro.
+6. No uses rutas de archivos. Todo debe correr al pegarlo en una celda de Colab.</pre>
+        </div>
+
+        <h4>Codigo esperado para mostrar si ChatGPT tarda</h4>
+        <div class="prompt">
+          <header><span>Codigo base para Colab</span><button class="copy">Copiar</button></header>
+          <pre>import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from io import StringIO
+
+csv = """docente_id,area,region,tipo_institucion,experiencia_anios,uso_ia_previo,horas_ahorradas_semana,calidad_material_1a5,confianza_1a5,actividad,resultado_aprendizaje_1a5,riesgo_etico_1a5
+D001,Salud,Antioquia,Publica,18,Bajo,2.5,4,3,Revision literatura,4,3
+D002,Educacion,Bogota,Privada,11,Medio,4.0,5,4,Rubrica,5,2
+D003,Ingenieria,Valle,Publica,22,Bajo,3.0,4,3,Analisis datos,4,3
+D004,Ciencias sociales,Santander,Publica,15,Medio,3.5,4,4,Estado del arte,4,3
+D005,Artes,Bogota,Privada,9,Alto,5.5,5,5,Imagen didactica,5,2
+D006,Salud,Atlantico,Publica,20,Bajo,2.0,3,3,Instrumento encuesta,3,4
+D007,Educacion,Narino,Publica,13,Medio,4.5,5,4,Planeacion clase,5,2
+D008,Ingenieria,Antioquia,Privada,7,Alto,6.0,5,5,Codigo Python,5,2
+D009,Ciencias basicas,Bogota,Publica,26,Bajo,2.5,4,3,Visualizacion,4,3
+D010,Ciencias sociales,Valle,Privada,16,Medio,4.0,4,4,Analisis cualitativo,4,3
+D011,Salud,Santander,Privada,12,Medio,3.5,4,4,Resumen papers,4,2
+D012,Educacion,Antioquia,Publica,24,Bajo,3.0,4,3,Retroalimentacion,4,3
+D013,Ingenieria,Bogota,Publica,19,Medio,5.0,5,4,Simulacion,5,2
+D014,Artes,Valle,Publica,8,Alto,6.5,5,5,Guion audiovisual,5,2
+D015,Ciencias basicas,Santander,Publica,21,Bajo,2.0,3,3,Banco preguntas,3,4
+D016,Educacion,Atlantico,Privada,10,Medio,4.0,5,4,Diseno taller,5,2
+D017,Salud,Narino,Publica,17,Bajo,2.5,4,3,Protocolo investigacion,4,3
+D018,Ingenieria,Valle,Privada,14,Alto,6.0,5,5,Analisis datos,5,2
+D019,Ciencias sociales,Bogota,Publica,23,Medio,3.5,4,4,Codificacion entrevistas,4,3
+D020,Ciencias basicas,Antioquia,Privada,6,Alto,5.5,5,5,Explicacion concepto,5,2
+D021,Educacion,Santander,Publica,28,Bajo,2.0,3,2,Rubrica,3,4
+D022,Salud,Bogota,Privada,15,Medio,4.5,5,4,Revision literatura,5,2
+D023,Ingenieria,Atlantico,Publica,12,Medio,4.0,4,4,Codigo Python,4,3
+D024,Artes,Narino,Publica,18,Bajo,3.0,4,3,Imagen didactica,4,3
+D025,Ciencias sociales,Antioquia,Privada,9,Alto,6.0,5,5,Presentacion,5,2
+D026,Ciencias basicas,Valle,Publica,25,Bajo,2.5,4,3,Visualizacion,4,3
+D027,Educacion,Bogota,Publica,20,Medio,4.5,5,4,Planeacion clase,5,2
+D028,Salud,Santander,Publica,13,Bajo,2.5,3,3,Instrumento encuesta,3,4
+D029,Ingenieria,Antioquia,Privada,11,Alto,6.5,5,5,Simulacion,5,2
+D030,Ciencias sociales,Atlantico,Publica,16,Medio,3.5,4,4,Estado del arte,4,3
+D031,Artes,Bogota,Privada,7,Alto,5.0,5,5,Guion audiovisual,5,2
+D032,Ciencias basicas,Narino,Publica,27,Bajo,2.0,3,2,Banco preguntas,3,4"""
+
+df = pd.read_csv(StringIO(csv))
+display(df.head())
+
+sns.set_theme(style="whitegrid", palette="Set2")
+
+plt.figure(figsize=(10, 5))
+orden = df.groupby("area")["horas_ahorradas_semana"].mean().sort_values().index
+sns.barplot(data=df, x="horas_ahorradas_semana", y="area", order=orden, errorbar=None)
+plt.title("Promedio de horas ahorradas por semana segun area")
+plt.xlabel("Horas ahorradas por semana")
+plt.ylabel("Area")
+plt.show()
+
+plt.figure(figsize=(8, 5))
+sns.boxplot(data=df, x="uso_ia_previo", y="horas_ahorradas_semana", order=["Bajo", "Medio", "Alto"])
+plt.title("Distribucion de horas ahorradas segun uso previo de IA")
+plt.xlabel("Uso previo de IA")
+plt.ylabel("Horas ahorradas por semana")
+plt.show()
+
+columnas = [
+    "experiencia_anios", "horas_ahorradas_semana", "calidad_material_1a5",
+    "confianza_1a5", "resultado_aprendizaje_1a5", "riesgo_etico_1a5"
+]
+plt.figure(figsize=(8, 6))
+sns.heatmap(df[columnas].corr(), annot=True, cmap="BrBG", vmin=-1, vmax=1)
+plt.title("Correlaciones entre variables del taller")
+plt.show()
+
+print("Hallazgos descriptivos:")
+print(f"1. Horas ahorradas promedio: {df['horas_ahorradas_semana'].mean():.2f} por semana.")
+print(f"2. Calidad percibida promedio: {df['calidad_material_1a5'].mean():.2f} sobre 5.")
+print(f"3. Confianza promedio: {df['confianza_1a5'].mean():.2f} sobre 5.")
+print("4. Quienes reportan uso previo alto tienden a declarar mayor ahorro de tiempo.")
+print("5. Este dataset es pequeno y demostrativo; sirve para aprendizaje, no para inferencia causal.")</pre>
+        </div>
+      </section>
+
+      <section id="objetivos">
+        <h3>Estacion 2: objetivos, rubricas e instrumentos</h3>
+        <p class="lede">Esta estacion muestra IA como copiloto pedagogico. El docente conserva la decision disciplinar, pero la IA acelera versiones, criterios y alineacion.</p>
+        <div class="grid">
+          <div>
+            <h4>Prompt para objetivo de aprendizaje</h4>
+            <div class="prompt">
+              <header><span>Objetivo medible</span><button class="copy">Copiar</button></header>
+              <pre>Actua como disenador curricular universitario.
+
+Contexto:
+- Curso: Metodologia de la investigacion
+- Nivel: Maestria
+- Tema de la sesion: uso critico de IA para revisar literatura cientifica
+- Duracion: 2 horas
+- Perfil: docentes investigadores con experiencia
+
+Necesito:
+1. Un objetivo general de aprendizaje, medible y observable.
+2. Tres resultados especificos alineados con Bloom.
+3. Una actividad de 25 minutos para evidenciar el logro.
+4. Un criterio de evaluacion por cada resultado.
+5. Una advertencia etica que deba incluirse en la clase.
+
+Evita frases genericas como "comprender la importancia". Usa verbos observables.</pre>
+            </div>
+          </div>
+          <div>
+            <h4>Prompt para rubrica</h4>
+            <div class="prompt">
+              <header><span>Rubrica academica</span><button class="copy">Copiar</button></header>
+              <pre>Crea una rubrica analitica para evaluar una actividad donde docentes usan IA para formular una pregunta de investigacion y una estrategia de busqueda bibliografica.
+
+Condiciones:
+- 4 criterios
+- 4 niveles de desempeno
+- Lenguaje universitario, claro y no infantil
+- Incluir un criterio sobre trazabilidad de fuentes y otro sobre uso etico de IA
+- Entregar en tabla
+- Agregar al final 3 preguntas de retroalimentacion para mejorar el trabajo</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="gamma">
+        <h3>Estacion 3: Gamma para diapositivas</h3>
+        <p class="lede">Gamma funciona mejor cuando se le da estructura, audiencia, tono, numero de tarjetas y contenido por seccion. Puedes pegar este prompt directamente en Gamma.</p>
+        <div class="prompt">
+          <header><span>Prompt para Gamma</span><button class="copy">Copiar</button></header>
+          <pre>Crea una presentacion de 10 diapositivas para docentes investigadores colombianos titulada:
+"IA generativa para investigacion y docencia: usos rigurosos, limites y buenas practicas"
+
+Audiencia:
+Docentes universitarios e investigadores senior de Colombia, con alta exigencia academica y poco tiempo para herramientas superficiales.
+
+Tono:
+Profesional, sobrio, practico, con ejemplos reales. Evita lenguaje publicitario.
+
+Estilo visual:
+Editorial academico, fondos claros, acentos en verde oscuro y rojo terracota, graficos simples, poco texto por diapositiva. Usa diagramas, tablas y ejemplos, no imagenes decorativas genericas.
+
+Estructura exacta:
+1. Titulo y promesa: que aprenderan hoy.
+2. Mapa de usos: docencia, investigacion, analisis de datos, comunicacion publica.
+3. Principio central: la IA no reemplaza criterio experto, acelera borradores verificables.
+4. Flujo 1: de pregunta de investigacion a estrategia de busqueda.
+5. Flujo 2: de dataset pequeno a grafica en Python/Colab.
+6. Flujo 3: de paper a matriz de evidencia.
+7. Flujo 4: de concepto dificil a imagen didactica.
+8. Riesgos: alucinaciones, sesgos, privacidad, autoria, dependencia.
+9. Checklist de uso responsable en investigacion.
+10. Actividad final: cada docente construye un prompt para su propio proyecto.
+
+Para cada diapositiva incluye:
+- titulo breve
+- 3 bullets maximo
+- una sugerencia visual concreta
+- una nota del expositor de 2 frases
+
+Incluye al final una diapositiva extra opcional con bibliografia y enlaces a herramientas.</pre>
+        </div>
+
+        <h4>Prompt para Gamma desde un paper o informe</h4>
+        <div class="prompt">
+          <header><span>Paper a diapositivas en Gamma</span><button class="copy">Copiar</button></header>
+          <pre>Convierte el siguiente resumen de articulo en una presentacion academica de 8 diapositivas.
+
+Contenido base:
+[pegar aqui resumen, hallazgos, graficas y conclusiones del paper]
+
+Audiencia:
+Docentes investigadores universitarios.
+
+Objetivo:
+Socializar resultados de investigacion en 7 minutos, con claridad metodologica y sin sobrecargar de texto.
+
+Estructura exacta:
+1. Titulo, autores y pregunta de investigacion.
+2. Problema y relevancia.
+3. Marco conceptual en un diagrama simple.
+4. Metodo: muestra, variables, procedimiento y limites.
+5. Resultado 1 con grafica sugerida.
+6. Resultado 2 con comparacion o tabla.
+7. Discusion: que significa y que no significa.
+8. Cierre: implicaciones, limites y preguntas para el publico.
+
+Estilo:
+Editorial academico, sobrio, con mucho aire, maximo 35 palabras por diapositiva. Sugiere visuales concretos para cada diapositiva. No uses frases publicitarias.</pre>
+        </div>
+      </section>
+
+      <section id="visuales">
+        <h3>Canva y Napkin para material visual</h3>
+        <p class="lede">Estas herramientas sirven para traducir hallazgos en piezas de clase: infografias, mapas conceptuales, diagramas de metodo, posters y resumenes visuales. La clave es pedir estructura, no decoracion.</p>
+
+        <div class="grid">
+          <div>
+            <h4>Canva: infografia academica</h4>
+            <div class="prompt">
+              <header><span>Prompt para Canva</span><button class="copy">Copiar</button></header>
+              <pre>Crea una infografia vertical para docentes universitarios.
+
+Tema:
+Flujo responsable para usar IA generativa en investigacion academica.
+
+Formato:
+Infografia A4 vertical, lista para descargar en PDF.
+
+Contenido:
+1. Formular pregunta de investigacion.
+2. Buscar evidencia con herramientas academicas.
+3. Verificar fuentes y guardar referencias.
+4. Analizar datos con codigo reproducible.
+5. Redactar con apoyo de IA, sin inventar citas.
+6. Declarar uso de IA y revisar etica.
+
+Estilo visual:
+Academico, limpio, profesional. Paleta: verde oscuro, azul tinta, terracota y fondo claro. Usa iconos simples, lineas de flujo y bloques numerados.
+
+Texto:
+Maximo 18 palabras por bloque. Titulo principal: "IA generativa con criterio academico".
+
+Evitar:
+Estetica futurista generica, robots, exceso de brillo, texto pequeno, imagenes de stock irrelevantes.</pre>
+            </div>
+          </div>
+          <div>
+            <h4>Canva: poster de investigacion</h4>
+            <div class="prompt">
+              <header><span>Poster academico en Canva</span><button class="copy">Copiar</button></header>
+              <pre>Crea un poster academico horizontal para presentar un miniestudio.
+
+Titulo:
+"Uso de IA generativa en practicas docentes universitarias: ejercicio descriptivo"
+
+Secciones:
+- Problema
+- Objetivo
+- Metodo
+- Resultados principales
+- Implicaciones docentes
+- Limitaciones
+- Declaracion de uso de IA
+
+Incluye espacios para:
+- una grafica de barras
+- un mapa de calor
+- una tabla pequena de hallazgos
+- codigo QR a repositorio o material complementario
+
+Estilo:
+Poster serio de congreso academico, alta legibilidad a distancia, fondo claro, columnas limpias, tipografia sobria.</pre>
+            </div>
+          </div>
+        </div>
+
+        <h4>Napkin: diagrama del flujo de investigacion</h4>
+        <div class="prompt">
+          <header><span>Prompt para Napkin AI</span><button class="copy">Copiar</button></header>
+          <pre>Convierte este texto en un diagrama claro de flujo academico:
+
+Una investigacion asistida por IA puede organizarse en ocho pasos:
+1. Definir problema y pregunta.
+2. Buscar evidencia con GPT con internet, Perplexity, Elicit y Consensus.
+3. Leer y comparar papers con SciSpace, NotebookLM o Claude.
+4. Guardar y depurar referencias en Zotero.
+5. Construir o limpiar dataset.
+6. Analizar datos y generar graficas en Google Colab.
+7. Redactar paper con GPT o Claude y exportar a LaTeX.
+8. Convertir resultados en presentacion con Gamma y material visual con Canva.
+
+Diseno deseado:
+Diagrama horizontal tipo pipeline, con 8 nodos, flechas simples, colores academicos sobrios, iconos discretos y una nota final: "La IA acelera; el investigador verifica".</pre>
+        </div>
+
+        <h4>Napkin: mapa conceptual para clase</h4>
+        <div class="prompt">
+          <header><span>Mapa conceptual en Napkin</span><button class="copy">Copiar</button></header>
+          <pre>Crea un mapa conceptual visual a partir de este contenido:
+
+Concepto central: Uso responsable de IA en investigacion.
+
+Ramas principales:
+- Calidad de evidencia: fuentes primarias, revision por pares, trazabilidad.
+- Metodo: pregunta clara, criterios de inclusion, analisis reproducible.
+- Etica: privacidad, autoria, sesgos, declaracion de uso.
+- Comunicacion: resumen, graficas, diapositivas, infografia.
+- Riesgos: alucinaciones, citas falsas, dependencia, datos sensibles.
+
+Estilo:
+Mapa conceptual radial, sobrio, legible, con conectores cortos y sin texto decorativo.</pre>
+        </div>
+      </section>
+
+      <section id="notebooklm">
+        <h3>Estacion 4: NotebookLM con fuentes propias</h3>
+        <p class="lede">Ideal cuando los docentes ya tienen PDFs, documentos institucionales, guias de curso o transcripciones. La ventaja pedagogica: las respuestas deben anclarse en fuentes cargadas por el usuario.</p>
+        <ol class="steps">
+          <li>Crear un notebook por proyecto, curso o linea de investigacion.</li>
+          <li>Subir 3 a 8 fuentes: articulos, syllabus, normas, informes o URLs confiables.</li>
+          <li>Pedir resumen, comparacion, matriz de conceptos y preguntas de discusion.</li>
+          <li>Validar las citas contra el documento original.</li>
+        </ol>
+        <div class="prompt">
+          <header><span>Prompt para NotebookLM</span><button class="copy">Copiar</button></header>
+          <pre>Con base exclusivamente en las fuentes cargadas en este notebook:
+
+1. Identifica los 5 conceptos centrales que se repiten entre las fuentes.
+2. Crea una matriz con: concepto, fuente donde aparece, definicion breve, evidencia textual y posible uso en clase.
+3. Senala tensiones o contradicciones entre autores.
+4. Propone 6 preguntas de seminario para estudiantes de posgrado.
+5. Crea un resumen ejecutivo de 250 palabras para un docente que no leyo todos los documentos.
+
+No uses informacion externa. Si una respuesta no esta sustentada en las fuentes, dilo explicitamente.</pre>
+        </div>
+      </section>
+
+      <section id="claude">
+        <h3>Estacion 5: Claude para archivos y busqueda interna</h3>
+        <p class="lede">Si el grupo usa Claude, esta actividad sirve para mostrar proyectos con instrucciones persistentes y consulta de archivos. Es especialmente util con borradores de articulos, entrevistas, protocolos o reglamentos.</p>
+        <div class="prompt">
+          <header><span>Instrucciones de proyecto en Claude</span><button class="copy">Copiar</button></header>
+          <pre>Rol del proyecto:
+Eres un asistente de investigacion academica. Trabajas con los archivos cargados por el usuario y respondes con rigor metodologico.
+
+Reglas:
+1. Prioriza informacion de los archivos cargados sobre conocimiento general.
+2. Cuando cites evidencia, menciona el nombre del archivo y la seccion si es visible.
+3. Separa hechos, inferencias y recomendaciones.
+4. No inventes autores, datos, paginas ni hallazgos.
+5. Si falta informacion, formula preguntas de aclaracion o marca el vacio.
+6. Mantén tono academico, preciso y util para investigadores senior.
+
+Tareas frecuentes:
+- construir matrices de evidencia
+- comparar versiones de un manuscrito
+- detectar vacios argumentativos
+- sugerir mejoras de metodo
+- extraer categorias de entrevistas
+- preparar respuestas a pares evaluadores</pre>
+        </div>
+        <div class="prompt">
+          <header><span>Prompt de busqueda personalizada en archivos</span><button class="copy">Copiar</button></header>
+          <pre>Busca dentro de los archivos cargados toda la informacion relacionada con:
+"uso de inteligencia artificial en procesos de evaluacion formativa"
+
+Entrega:
+1. Lista de coincidencias relevantes agrupadas por archivo.
+2. Una tabla con: archivo, fragmento o idea, tipo de evidencia, utilidad para el articulo.
+3. 5 patrones comunes encontrados.
+4. 3 vacios que deberia revisar antes de escribir.
+5. Un parrafo de sintesis academica que pueda servir como borrador inicial.
+
+Importante: no uses fuentes externas y no inventes citas textuales.</pre>
+        </div>
+      </section>
+
+      <section id="busqueda">
+        <h3>Estacion 6: busqueda academica asistida</h3>
+        <p class="lede">Aqui el mensaje clave es control de calidad: IA para ampliar busquedas, no para saltarse lectura critica.</p>
+        <table>
+          <thead>
+            <tr><th>Herramienta</th><th>Mejor uso</th><th>Prompt demostrativo</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Elicit</td>
+              <td>Revision de literatura, extraccion de datos, screening y preguntas de investigacion.</td>
+              <td>What is the evidence on generative AI improving formative assessment practices in higher education?</td>
+            </tr>
+            <tr>
+              <td>Consensus</td>
+              <td>Responder preguntas con evidencia cientifica y localizar papers relevantes.</td>
+              <td>Does AI-assisted feedback improve student learning outcomes in university courses?</td>
+            </tr>
+            <tr>
+              <td>Perplexity</td>
+              <td>Exploracion rapida con citas web, academic search y espacios por proyecto.</td>
+              <td>Busca revisiones sistematicas recientes sobre IA generativa en educacion superior. Prioriza 2023-2026 y fuentes revisadas por pares.</td>
+            </tr>
+            <tr>
+              <td>SciSpace</td>
+              <td>Leer papers dificiles y explicar metodologia, variables, resultados y limitaciones.</td>
+              <td>Explain the methodology of this paper for a professor designing a similar study in Colombia.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="prompt">
+          <header><span>Prompt maestro para busqueda academica</span><button class="copy">Copiar</button></header>
+          <pre>Actua como bibliotecologo academico y metodologo.
+
+Tema: [pegar tema del docente]
+Campo: [educacion/salud/ingenieria/ciencias sociales/etc.]
+Periodo: 2021-2026
+Idiomas: espanol e ingles
+
+Necesito:
+1. Formular una pregunta de investigacion refinada.
+2. Proponer 3 cadenas de busqueda: amplia, intermedia y estricta.
+3. Sugerir sinonimos y terminos controlados.
+4. Definir criterios de inclusion y exclusion.
+5. Crear una tabla para registrar resultados: autor, ano, pais, muestra, metodo, hallazgos, limitaciones.
+6. Advertir posibles sesgos de busqueda.
+
+No escribas conclusiones sin evidencia. Prioriza trazabilidad.</pre>
+        </div>
+      </section>
+
+      <section id="papers">
+        <h3>Prompts por herramienta academica</h3>
+        <p class="lede">Esta seccion es para que los docentes vean que no todas las IA hacen lo mismo. Elicit ayuda a revisar literatura, Consensus responde con papers, SciSpace explica articulos, y Perplexity sirve para exploracion con fuentes.</p>
+
+        <div class="grid">
+          <div>
+            <h4>Elicit: pregunta y criterios de revision</h4>
+            <div class="prompt">
+              <header><span>Prompt para Elicit</span><button class="copy">Copiar</button></header>
+              <pre>Research question:
+How does generative artificial intelligence influence formative assessment, feedback quality, and teacher workload in higher education?
+
+Context:
+I am preparing a literature review for university teachers and researchers in Colombia. I need empirical studies, systematic reviews, and strong conceptual papers.
+
+Inclusion criteria:
+- Higher education or university context.
+- Generative AI, large language models, ChatGPT, Gemini, Claude, or AI-assisted feedback.
+- Outcomes related to teaching, assessment, feedback, research productivity, academic writing, or workload.
+- Publications from 2021 to 2026.
+- English or Spanish.
+
+Exclusion criteria:
+- Opinion pieces without evidence.
+- K-12 only, unless the method is highly transferable.
+- Papers focused only on technical model architecture.
+
+Extract columns:
+1. Citation
+2. Country/context
+3. Study design
+4. Sample
+5. AI tool or intervention
+6. Outcomes measured
+7. Main findings
+8. Limitations
+9. Relevance for Colombian higher education</pre>
+            </div>
+          </div>
+          <div>
+            <h4>Consensus: pregunta con evidencia</h4>
+            <div class="prompt">
+              <header><span>Prompt para Consensus</span><button class="copy">Copiar</button></header>
+              <pre>Does generative AI improve feedback quality, learning outcomes, or teacher productivity in higher education?
+
+Please prioritize:
+- systematic reviews
+- meta-analyses
+- empirical studies
+- papers from 2021-2026
+- higher education contexts
+
+For the answer:
+1. Separate what the evidence supports strongly, moderately, and weakly.
+2. List the most relevant papers.
+3. Identify contradictions or gaps.
+4. Explain whether the findings are applicable to Latin American universities.
+5. Avoid overclaiming causal effects if the studies are observational.</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div>
+            <h4>SciSpace: explicar un paper dificil</h4>
+            <div class="prompt">
+              <header><span>Prompt para SciSpace</span><button class="copy">Copiar</button></header>
+              <pre>Explain this paper for a senior university professor who wants to evaluate whether the study is methodologically strong.
+
+Please produce:
+1. Research problem in plain academic language.
+2. Theoretical framework or key concepts.
+3. Methodology: design, sample, variables, instruments and procedure.
+4. Main results.
+5. Limitations explicitly acknowledged by the authors.
+6. Limitations you detect as a critical reader.
+7. How this paper could inform a study in Colombian higher education.
+8. Three quotes or sections I should verify in the original PDF before citing.
+
+Do not invent page numbers. If you are unsure, say so.</pre>
+            </div>
+          </div>
+          <div>
+            <h4>Perplexity: exploracion con fuentes</h4>
+            <div class="prompt">
+              <header><span>Prompt para Perplexity</span><button class="copy">Copiar</button></header>
+              <pre>Search the web and academic sources for recent evidence on:
+"generative AI adoption by university teachers in Latin America"
+
+Requirements:
+1. Prioritize 2023-2026.
+2. Include academic papers, institutional reports, UNESCO/OECD/World Bank if relevant, and Latin American sources.
+3. Separate peer-reviewed evidence from institutional guidance and news.
+4. Provide links for every claim.
+5. Create a table with: source, year, country/region, type of evidence, key finding, reliability level.
+6. End with 5 refined research questions for a Colombian university context.</pre>
+            </div>
+          </div>
+        </div>
+
+        <h4>Claude o ChatGPT: fusionar matriz de literatura</h4>
+        <div class="prompt">
+          <header><span>Sintesis de estado del arte</span><button class="copy">Copiar</button></header>
+          <pre>Actua como investigador senior y sintetiza esta matriz de literatura.
+
+Material:
+[pegar tabla exportada de Elicit, Consensus, SciSpace o Zotero]
+
+Entrega:
+1. Estado del arte en 900-1200 palabras.
+2. Organiza la sintesis por temas, no articulo por articulo.
+3. Identifica consensos, contradicciones y vacios.
+4. Senala que evidencia es empirica y que evidencia es conceptual.
+5. Propone un modelo conceptual simple para el articulo.
+6. Incluye una tabla final con: tema, evidencia principal, autores, implicacion.
+
+Reglas:
+- No inventes referencias.
+- Conserva autores y anos tal como aparecen en la matriz.
+- Si faltan metadatos, marca [dato faltante].
+- No conviertas correlaciones en causalidad.</pre>
+        </div>
+      </section>
+
+      <section id="zotero-latex">
+        <h3>Zotero, BibTeX y articulo en LaTeX</h3>
+        <p class="lede">Este bloque cierra el ciclo. La idea es que el docente vea un producto academico exportable, no solo respuestas sueltas. Zotero cuida la bibliografia; LaTeX da formato reproducible; GPT o Claude ayudan a ensamblar, pero el investigador verifica.</p>
+
+        <div class="grid">
+          <div>
+            <h4>Zotero: ordenar referencias</h4>
+            <div class="prompt">
+              <header><span>Checklist para Zotero</span><button class="copy">Copiar</button></header>
+              <pre>Actividad para Zotero:
+
+1. Crear una coleccion llamada "IA generativa docencia investigacion".
+2. Guardar al menos 8 referencias desde Elicit, Consensus, Google Scholar, Scopus, Web of Science o fuente institucional.
+3. Revisar manualmente:
+   - autores completos
+   - ano
+   - titulo
+   - revista/editorial
+   - DOI o URL
+   - tipo de documento
+4. Agregar etiquetas:
+   - evidencia empirica
+   - revision
+   - marco conceptual
+   - politica institucional
+   - America Latina
+5. Exportar la coleccion en BibTeX como references.bib.
+
+Mensaje para docentes:
+La IA puede sugerir referencias, pero Zotero ayuda a evitar bibliografias falsas y metadatos sucios.</pre>
+            </div>
+          </div>
+          <div>
+            <h4>GPT/Claude: limpiar BibTeX</h4>
+            <div class="prompt">
+              <header><span>Depurar references.bib</span><button class="copy">Copiar</button></header>
+              <pre>Revisa este archivo BibTeX exportado desde Zotero.
+
+Tareas:
+1. Detecta entradas duplicadas.
+2. Senala campos faltantes importantes: author, year, title, journal/booktitle, doi, url.
+3. Sugiere claves BibTeX limpias con formato AutorAnoTema.
+4. No inventes DOI, revista ni paginas.
+5. Devuelve una version corregida del BibTeX solo cuando el dato exista.
+6. Lista aparte los registros que debo revisar manualmente.
+
+BibTeX:
+[pegar references.bib]</pre>
+            </div>
+          </div>
+        </div>
+
+        <h4>Prompt final: exportar paper en LaTeX</h4>
+        <div class="prompt">
+          <header><span>Generar main.tex y references.bib</span><button class="copy">Copiar</button></header>
+          <pre>Actua como editor academico y experto en LaTeX.
+
+Voy a darte:
+1. Titulo, resumen y objetivos.
+2. Estado del arte sintetizado.
+3. Metodo.
+4. Resultados descriptivos.
+5. Descripciones de graficas generadas en Colab.
+6. Referencias en formato BibTeX.
+
+Tu tarea:
+Genera un proyecto LaTeX minimo con dos archivos:
+- main.tex
+- references.bib
+
+Requisitos para main.tex:
+1. Usar article.
+2. Idioma espanol.
+3. Incluir paquetes: inputenc, fontenc, babel, geometry, graphicx, booktabs, longtable, hyperref, natbib.
+4. Estructura: titulo, autores como placeholders, resumen, palabras clave, introduccion, estado del arte, metodo, resultados, discusion, limitaciones, conclusiones, declaracion de uso de IA, referencias.
+5. Insertar placeholders de figuras:
+   \includegraphics[width=\linewidth]{figura1_horas_area.png}
+   \includegraphics[width=\linewidth]{figura2_boxplot_uso.png}
+   \includegraphics[width=\linewidth]{figura3_correlaciones.png}
+6. Insertar una tabla de variables con booktabs.
+7. Usar citas con \citep{} solo para referencias que existan en references.bib.
+8. Donde falte evidencia, escribir [CITA PENDIENTE] en vez de inventar.
+9. No inventar nombres de autores, DOI ni revistas.
+
+Requisitos para references.bib:
+1. Mantener solo referencias verificables que yo haya pegado.
+2. Si no hay BibTeX suficiente, crea una seccion comentada indicando "referencias pendientes".
+
+Formato de respuesta:
+Primero escribe:
+=== main.tex ===
+[codigo completo]
+
+Luego:
+=== references.bib ===
+[codigo completo]
+
+Material base:
+[pegar aqui toda la informacion del proyecto]</pre>
+        </div>
+
+        <h4>Prompt para resumen ejecutivo que alimenta Gamma</h4>
+        <div class="prompt">
+          <header><span>Paper a resumen para Gamma</span><button class="copy">Copiar</button></header>
+          <pre>Resume este paper para convertirlo en una presentacion en Gamma.
+
+Necesito:
+1. Mensaje central en una frase.
+2. 6 ideas clave.
+3. 3 resultados que merecen grafica.
+4. 2 limitaciones que deben comunicarse con honestidad.
+5. 1 diapositiva de implicaciones para docentes.
+6. 1 diapositiva de recomendaciones para investigadores.
+7. Un esquema de 8 diapositivas con titulo y nota del expositor.
+
+Reglas:
+- No uses lenguaje promocional.
+- No ocultes limitaciones.
+- No agregues resultados que no esten en el paper.
+- Escribe pensando en una presentacion de 7 minutos.
+
+Paper:
+[pegar texto del articulo o resumen extendido]</pre>
+        </div>
+      </section>
+
+      <section id="imagenes">
+        <h3>Estacion 7: imagenes didacticas con Gemini o ChatGPT</h3>
+        <p class="lede">El truco no es pedir "una imagen bonita". Es especificar proposito didactico, concepto, audiencia, estilo, restricciones y elementos que no deben aparecer.</p>
+        <div class="grid">
+          <div>
+            <h4>Prompt para imagen conceptual</h4>
+            <div class="prompt">
+              <header><span>Gemini o ChatGPT Imagenes</span><button class="copy">Copiar</button></header>
+              <pre>Genera una imagen didactica para una clase universitaria.
+
+Concepto: triangulacion metodologica en investigacion cualitativa.
+Audiencia: estudiantes de maestria y docentes investigadores.
+Formato: infografia horizontal 16:9.
+Estilo: editorial academico, limpio, sobrio, con tres fuentes de evidencia representadas visualmente: entrevistas, observacion y documentos.
+Composicion: un triangulo central con flechas sutiles, pequenos iconos conceptuales, espacio libre para que el docente agregue texto.
+Paleta: fondo claro, verde profundo, azul tinta y acento terracota.
+Texto en la imagen: solo "Triangulacion metodologica".
+Evitar: caricaturas, estudiantes sonrientes genericos, laboratorios futuristas, exceso de texto, manos deformes, logos, marcas de agua visibles.</pre>
+            </div>
+          </div>
+          <div>
+            <h4>Prompt para editar una imagen</h4>
+            <div class="prompt">
+              <header><span>Edicion de imagen</span><button class="copy">Copiar</button></header>
+              <pre>Usa la imagen cargada como base y transformala en material didactico.
+
+Mantén la estructura principal, pero:
+1. Limpia el fondo y mejora contraste.
+2. Convierte el estilo a ilustracion editorial universitaria.
+3. Agrega zonas de enfoque con colores suaves.
+4. Deja espacio superior para titulo.
+5. No cambies el significado cientifico de la imagen.
+6. No agregues texto pequeno ilegible.
+
+Resultado esperado: una imagen clara para una diapositiva de clase, no una pieza publicitaria.</pre>
+            </div>
+          </div>
+        </div>
+        <div class="band">
+          <strong>Microactividad:</strong> cada docente toma un concepto dificil de su area y escribe un prompt con seis campos: concepto, audiencia, formato, estilo, elementos obligatorios y elementos prohibidos.
+        </div>
+      </section>
+
+      <section id="etica">
+        <h3>Checklist etico para cerrar</h3>
+        <p class="lede">Este cierre ayuda a que la conferencia no parezca una feria de herramientas. La IA entra al trabajo academico solo si mejora claridad, trazabilidad y calidad.</p>
+        <ul class="ethics">
+          <li><strong>Privacidad:</strong> no subir datos sensibles, historias clinicas, evaluaciones nominales ni entrevistas identificables sin autorizacion.</li>
+          <li><strong>Autoría:</strong> declarar el uso de IA cuando la revista, universidad o convocatoria lo exija.</li>
+          <li><strong>Verificacion:</strong> toda cita, DOI, dato estadistico o afirmacion fuerte debe revisarse en la fuente original.</li>
+          <li><strong>Sesgo:</strong> pedir a la IA que busque contraargumentos, no solo evidencia favorable.</li>
+          <li><strong>Reproducibilidad:</strong> guardar prompts, versiones, criterios de busqueda y fecha de consulta.</li>
+          <li><strong>Pedagogia:</strong> evaluar el razonamiento del estudiante, no solo el producto final pulido por IA.</li>
+        </ul>
+        <div class="prompt">
+          <header><span>Prompt de verificacion critica</span><button class="copy">Copiar</button></header>
+          <pre>Audita criticamente la siguiente respuesta generada por IA.
+
+Texto a auditar:
+[pegar respuesta]
+
+Evalua:
+1. Afirmaciones que necesitan fuente.
+2. Posibles alucinaciones o generalizaciones.
+3. Sesgos disciplinares o culturales.
+4. Riesgos eticos o de privacidad.
+5. Que deberia verificar en literatura primaria.
+6. Version corregida, mas cauta y academica.
+
+No suavices los problemas. Quiero una auditoria exigente.</pre>
+        </div>
+      </section>
+
+      <section id="fuentes">
+        <h3>Fuentes verificadas para mencionar</h3>
+        <p class="lede">No necesitas leer esto en la charla, pero te sirve como respaldo si alguien pregunta por capacidades actuales.</p>
+        <table>
+          <thead>
+            <tr><th>Herramienta</th><th>Referencia util</th><th>Dato para decir en vivo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ChatGPT</td><td><a href="https://help.openai.com/en/articles/8437071-data-analysis-with-chatgpt" target="_blank">OpenAI Help: Data analysis with ChatGPT</a></td><td>Puede analizar archivos, crear tablas y graficas, y usar Python para tareas de analisis.</td></tr>
+            <tr><td>ChatGPT archivos</td><td><a href="https://openai.com/academy/working-with-files/" target="_blank">OpenAI Academy: Working with files</a></td><td>Permite trabajar con CSV, Excel, PDF, Word, imagenes y texto, segun plan y disponibilidad.</td></tr>
+            <tr><td>Gamma</td><td><a href="https://gamma.app/explore/content/guides/gamma-ai-instant-presentations" target="_blank">Gamma guide</a></td><td>Genera presentaciones desde prompts, texto pegado, archivos o URLs.</td></tr>
+            <tr><td>NotebookLM</td><td><a href="https://workspace.google.com/intl/es/products/notebooklm/" target="_blank">Google Workspace: NotebookLM</a></td><td>Admite PDFs, Docs, Slides, Markdown, URLs, YouTube y audio; genera resumenes de audio.</td></tr>
+            <tr><td>Gemini imagenes</td><td><a href="https://blog.google/products/gemini/updated-image-editing-model/" target="_blank">Google Gemini image editing</a></td><td>Permite editar imagenes, combinar referencias y hacer edicion iterativa con prompts.</td></tr>
+            <tr><td>Perplexity</td><td><a href="https://www.perplexity.ai/help-center/pt/articles/10352961" target="_blank">Perplexity Spaces</a></td><td>Los Spaces organizan investigacion, instrucciones, archivos y busquedas por proyecto.</td></tr>
+            <tr><td>Elicit</td><td><a href="https://pro.elicit.com/solutions/systematic-reviews" target="_blank">Elicit systematic reviews</a></td><td>Orienta busqueda, screening, extraccion de datos y reportes para revisiones sistematicas.</td></tr>
+            <tr><td>Consensus</td><td><a href="https://help.consensus.app/en/articles/11954907-consensus-product-changelog" target="_blank">Consensus changelog</a></td><td>Incluye busqueda de papers, analisis de articulos, biblioteca, grafo de citas e integraciones.</td></tr>
+          </tbody>
+        </table>
+        <div class="footer">
+          <span>Preparado para taller docente e investigador. Fecha de armado: 4 de junio de 2026.</span>
+          <a class="deerflow" href="https://deerflow.tech" target="_blank">Created By Deerflow</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll("button.copy");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const prompt = button.closest(".prompt");
+        const text = prompt.querySelector("pre").innerText;
+
+        try {
+          await navigator.clipboard.writeText(text);
+          const original = button.textContent;
+          button.textContent = "Copiado";
+          setTimeout(() => {
+            button.textContent = original;
+          }, 1400);
+        } catch (error) {
+          button.textContent = "Selecciona";
+          const range = document.createRange();
+          range.selectNodeContents(prompt.querySelector("pre"));
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
