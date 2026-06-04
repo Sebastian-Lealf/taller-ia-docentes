@@ -283,7 +283,7 @@
 
     .schedule {
       display: grid;
-      grid-template-columns: 90px minmax(0, 1fr);
+      grid-template-columns: minmax(7.5rem, max-content) minmax(0, 1fr);
       gap: 0;
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -292,7 +292,13 @@
     }
 
     .schedule div { padding: 12px; border-bottom: 1px solid var(--line); }
-    .schedule div:nth-child(odd) { font-weight: 800; color: var(--red); background: rgba(156, 63, 46, .07); }
+    .schedule div:nth-child(odd) {
+      font-weight: 800;
+      color: var(--red);
+      background: rgba(156, 63, 46, .07);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
     .schedule div:nth-last-child(-n + 2) { border-bottom: 0; }
 
     table {
