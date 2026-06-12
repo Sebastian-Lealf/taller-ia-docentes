@@ -283,7 +283,7 @@
 
     .schedule {
       display: grid;
-      grid-template-columns: minmax(7.5rem, max-content) minmax(0, 1fr);
+      grid-template-columns: minmax(132px, .28fr) minmax(0, 1fr);
       gap: 0;
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -291,13 +291,16 @@
       background: rgba(255, 250, 240, .82);
     }
 
-    .schedule div { padding: 12px; border-bottom: 1px solid var(--line); }
+    .schedule div {
+      min-width: 0;
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      overflow-wrap: anywhere;
+    }
     .schedule div:nth-child(odd) {
       font-weight: 800;
       color: var(--red);
       background: rgba(156, 63, 46, .07);
-      overflow-wrap: break-word;
-      word-break: break-word;
     }
     .schedule div:nth-last-child(-n + 2) { border-bottom: 0; }
 
@@ -506,6 +509,7 @@
       nav, .hero-grid, .tools-grid { grid-template-columns: 1fr; }
       .flow-board { grid-template-columns: 1fr; }
       .bar-row { grid-template-columns: 1fr; gap: 6px; }
+      .schedule { grid-template-columns: minmax(92px, .34fr) minmax(0, 1fr); }
       .hero { min-height: auto; padding-top: 18px; }
       table { overflow-x: auto; }
       thead, tbody, tr { min-width: 760px; }
@@ -525,8 +529,10 @@
         <a href="#agenda">Agenda</a>
         <a href="#herramientas">Herramientas</a>
         <a href="#flujos-herramientas">Flujos y graficos</a>
+        <a href="#agentes-skills">Agentes y skills</a>
         <a href="#flujo-paper">Flujo paper completo</a>
         <a href="#chatgpt">ChatGPT + Colab</a>
+        <a href="#colab-ia">Colab con IA</a>
         <a href="#objetivos">Objetivos y rubricas</a>
         <a href="#gamma">Gamma</a>
         <a href="#visuales">Canva y Napkin</a>
@@ -535,6 +541,7 @@
         <a href="#busqueda">Busqueda academica</a>
         <a href="#papers">Elicit, Consensus, SciSpace</a>
         <a href="#zotero-latex">Zotero y LaTeX</a>
+        <a href="#publicacion-ia">Articulo desde cero</a>
         <a href="#imagenes">Imagenes didacticas</a>
         <a href="#etica">Etica</a>
       </nav>
@@ -546,10 +553,10 @@
         <h2>IA aplicada a docencia, investigacion y produccion academica.</h2>
         <p>La idea no es mostrar magia. Es mostrar flujos de trabajo repetibles: preguntar mejor, verificar, sintetizar, visualizar datos, producir materiales didacticos y ahorrar tiempo sin renunciar al criterio investigador.</p>
         <div class="hero-grid">
-          <div class="stat"><strong>11</strong><span>estaciones de taller con prompts listos</span></div>
+          <div class="stat"><strong>15+</strong><span>estaciones de taller con prompts listos</span></div>
           <div class="stat"><strong>1</strong><span>dataset educativo para copiar y graficar</span></div>
           <div class="stat"><strong>20+</strong><span>herramientas utiles para investigadores</span></div>
-          <div class="stat"><strong>90 min</strong><span>formato recomendado para demostracion</span></div>
+          <div class="stat"><strong>45</strong><span>bloques copiables para demo en vivo</span></div>
         </div>
       </section>
 
@@ -856,6 +863,133 @@ No respondas la tarea del prompt todavia; primero mejora el prompt.</pre>
         </div>
       </section>
 
+      <section id="agentes-skills">
+        <h3>Agentes, skills, CLI y conexiones con otras herramientas</h3>
+        <p class="lede">Esta parte explica el salto entre "usar un chat" y "trabajar con un agente". Un chat responde; un agente puede recibir una meta, revisar contexto, usar herramientas, ejecutar pasos, pedir permisos y devolver un resultado verificable.</p>
+
+        <div class="grid">
+          <article class="card">
+            <span class="tag">Agente</span>
+            <h4>Un asistente con objetivo y herramientas</h4>
+            <p>Puede dividir una tarea, leer archivos, consultar fuentes, ejecutar codigo, abrir navegadores, revisar resultados y repetir hasta llegar a una entrega.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Skill</span>
+            <h4>Una receta reutilizable</h4>
+            <p>Es un paquete de instrucciones, ejemplos y a veces scripts. Sirve para no pegar siempre el mismo procedimiento: revisar papers, generar LaTeX, auditar datos o preparar diapositivas.</p>
+          </article>
+          <article class="card">
+            <span class="tag">Subagente</span>
+            <h4>Especialista temporal</h4>
+            <p>Trabaja en una parte del problema: literatura, datos, redaccion, diseno, seguridad o revision. Devuelve un resumen para que la conversacion principal no se llene de ruido.</p>
+          </article>
+          <article class="card">
+            <span class="tag">MCP / conector</span>
+            <h4>Puente a datos y apps</h4>
+            <p>Permite que la IA use herramientas externas: GitHub, Google Drive, Figma, navegador, bases de datos, Slack, Canva u otras integraciones disponibles.</p>
+          </article>
+        </div>
+
+        <h4>Comparativa rapida: chat, agente, skill y conector</h4>
+        <table>
+          <thead>
+            <tr><th>Concepto</th><th>Para que sirve</th><th>Ejemplo en investigacion</th><th>Riesgo a controlar</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Chat</td><td>Conversar, redactar, preguntar y pedir explicaciones.</td><td>Reescribir un objetivo o resumir una tabla.</td><td>Alucinaciones si no se le dan fuentes.</td></tr>
+            <tr><td>Agente</td><td>Ejecutar una meta compuesta usando herramientas.</td><td>Buscar bibliografia, crear matriz, generar codigo y revisar errores.</td><td>Debe tener limites, permisos y verificacion humana.</td></tr>
+            <tr><td>Skill</td><td>Guardar un procedimiento repetible.</td><td>Skill "paper-rapido": siempre genera IMRyD, LaTeX, BibTeX y checklist etico.</td><td>Si la skill esta mal escrita, repite errores a escala.</td></tr>
+            <tr><td>MCP/conector</td><td>Conectar con datos vivos o apps externas.</td><td>Leer Google Drive, crear disenos en Canva, revisar issues de GitHub o consultar una base de datos.</td><td>Privacidad, permisos excesivos y datos sensibles.</td></tr>
+            <tr><td>CLI</td><td>Controlar el agente desde terminal o proyecto local.</td><td>Codex o Claude Code editan archivos, corren pruebas, crean commits o producen un articulo desde una carpeta.</td><td>Revisar antes de ejecutar comandos o publicar.</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Ejemplos de agentes para un equipo investigador</h4>
+        <div class="tools-grid">
+          <article class="card"><span class="tag">Agente 1</span><h4>Bibliotecologo IA</h4><p>Busca literatura, separa evidencia empirica de opinion, propone cadenas de busqueda y crea una matriz de papers.</p></article>
+          <article class="card"><span class="tag">Agente 2</span><h4>Metodologo</h4><p>Revisa pregunta, objetivos, variables, muestra, limites, sesgos y si el metodo responde realmente al problema.</p></article>
+          <article class="card"><span class="tag">Agente 3</span><h4>Analista Colab</h4><p>Genera codigo Python, limpia datos, entrena modelos sencillos, produce graficas y explica resultados sin exagerar causalidad.</p></article>
+          <article class="card"><span class="tag">Agente 4</span><h4>Editor LaTeX</h4><p>Convierte resultados en articulo IMRyD, inserta figuras, tablas, BibTeX y declaracion de uso de IA.</p></article>
+          <article class="card"><span class="tag">Agente 5</span><h4>Disenador academico</h4><p>Transforma el paper en Gamma, Canva, Napkin o Figma para socializacion, clase o congreso.</p></article>
+          <article class="card"><span class="tag">Agente 6</span><h4>Par evaluador</h4><p>Audita citas, metodos, privacidad, conclusiones y debilidades antes de enviar o publicar.</p></article>
+        </div>
+
+        <h4>Prompt para crear un equipo de agentes</h4>
+        <div class="prompt">
+          <header><span>Equipo multiagente para articulo</span><button class="copy">Copiar</button></header>
+          <pre>Actua como coordinador de un equipo de agentes para producir un miniarticulo cientifico asistido por IA.
+
+Tema:
+[pegar tema de investigacion]
+
+Configura 6 agentes:
+1. Bibliotecologo IA: busqueda, fuentes, matriz de literatura.
+2. Metodologo: pregunta, objetivos, variables, limites.
+3. Analista de datos: dataset, limpieza, Colab, graficas, modelo predictivo simple.
+4. Editor academico: introduccion, metodo, resultados, discusion.
+5. Editor LaTeX/Zotero: main.tex, references.bib, figuras y tablas.
+6. Disenador de socializacion: Gamma, Canva, Napkin, resumen ejecutivo.
+
+Para cada agente entrega:
+- objetivo
+- herramientas que usaria
+- entrada necesaria
+- salida esperada
+- riesgos que debe vigilar
+- prompt inicial
+
+Regla central:
+La IA puede producir borradores y artefactos, pero debe marcar evidencia faltante como [CITA PENDIENTE] y nunca inventar datos, DOI ni resultados.</pre>
+        </div>
+
+        <h4>Ejemplos de conexiones CLI y conectores</h4>
+        <table>
+          <thead>
+            <tr><th>Conexion</th><th>Que permite</th><th>Ejemplo de uso docente/investigador</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Codex CLI + GitHub</td><td>Editar archivos, generar HTML, crear commits, subir cambios y publicar Pages.</td><td>Actualizar esta pagina del taller, hacer commit y desplegar la version publica.</td></tr>
+            <tr><td>Codex + Canva app/conector</td><td>Crear o redimensionar disenos editables cuando la integracion esta disponible y autorizada.</td><td>Convertir el resumen del paper en infografia o carrusel docente.</td></tr>
+            <tr><td>Codex + Figma MCP</td><td>Leer pantallas, enviar mockups o sincronizar componentes visuales.</td><td>Pasar una plantilla academica a un diseno editable para el equipo.</td></tr>
+            <tr><td>Codex + navegador/Playwright</td><td>Probar paginas, capturar screenshots y revisar que un sitio funcione.</td><td>Validar que el HTML de la conferencia no tenga texto saliendose de los cuadros.</td></tr>
+            <tr><td>Claude Code CLI + MCP</td><td>Conectar con Google Drive, Jira, Slack, GitHub, bases de datos o herramientas propias.</td><td>Leer documentos de proyecto, revisar issues y producir un reporte desde terminal.</td></tr>
+            <tr><td>Claude Code + subagentes/skills</td><td>Delegar investigacion, revision, depuracion o escritura a agentes especializados.</td><td>Un agente resume papers, otro revisa metodo y otro genera LaTeX.</td></tr>
+            <tr><td>Canvas LMS o Moodle via API/MCP</td><td>Cuando la institucion lo permite, conectar cursos, rubricas, tareas o reportes.</td><td>Generar retroalimentacion, revisar rubricas o preparar material para un curso.</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Mini skill de ejemplo: paper rapido</h4>
+        <div class="prompt">
+          <header><span>SKILL.md de ejemplo</span><button class="copy">Copiar</button></header>
+          <pre>---
+name: paper-rapido
+description: Usa esta skill cuando el usuario quiera convertir una idea, dataset y matriz de literatura en un miniarticulo cientifico con LaTeX, graficas y checklist etico.
+---
+
+## Objetivo
+Producir un paquete academico minimo: pregunta, objetivos, metodo, analisis, graficas, articulo IMRyD, references.bib, presentacion y checklist de verificacion.
+
+## Flujo
+1. Confirmar tema, audiencia y tipo de articulo.
+2. Pedir o generar dataset sintetico solo si el usuario aclara que es demostrativo.
+3. Separar fuentes verificadas de fuentes pendientes.
+4. Generar codigo Colab reproducible.
+5. Redactar resultados sin causalidad exagerada.
+6. Generar main.tex y references.bib.
+7. Crear resumen para Gamma, Canva y Napkin.
+8. Cerrar con checklist de privacidad, autoria, fuentes y reproducibilidad.
+
+## Reglas
+- No inventar DOI, autores ni datos.
+- Marcar [CITA PENDIENTE] si falta fuente.
+- Distinguir dataset real, dataset sintetico y ejemplo pedagogico.
+- Incluir declaracion de uso de IA.</pre>
+        </div>
+
+        <h4>Fuentes para mencionar en vivo</h4>
+        <p class="lede">Codex documenta skills como paquetes de instrucciones y recursos que se cargan cuando son relevantes; tambien documenta MCP como conexion con herramientas externas y subagentes para trabajo paralelo. Claude Code documenta un enfoque similar: CLI, MCP, subagentes, skills, hooks y superficies como terminal, IDE, escritorio y web.</p>
+      </section>
+
       <section id="flujo-paper">
         <h3>Flujo completo: de una idea a paper, graficas y presentacion</h3>
         <p class="lede">Este es el hilo narrativo mas potente para la conferencia: no mostrar herramientas aisladas, sino una cadena de trabajo academico. Puedes decirles: "vamos a producir un miniarticulo verificable, con datos, graficas, bibliografia, LaTeX y diapositivas".</p>
@@ -1115,6 +1249,188 @@ print(f"2. Calidad percibida promedio: {df['calidad_material_1a5'].mean():.2f} s
 print(f"3. Confianza promedio: {df['confianza_1a5'].mean():.2f} sobre 5.")
 print("4. Quienes reportan uso previo alto tienden a declarar mayor ahorro de tiempo.")
 print("5. Este dataset es pequeno y demostrativo; sirve para aprendizaje, no para inferencia causal.")</pre>
+        </div>
+      </section>
+
+      <section id="colab-ia">
+        <h3>Google Colab con IA: codigo, graficas y modelos predictivos</h3>
+        <p class="lede">Colab permite ejecutar Python en la nube, combinar texto explicativo con codigo y generar resultados reproducibles. Ademas, cuando las funciones de IA estan disponibles en la cuenta, se puede pedir ayuda para escribir, explicar o corregir codigo dentro del notebook.</p>
+
+        <div class="band">
+          <strong>Idea para docentes:</strong> Colab no es solo para programadores. Es un cuaderno de investigacion reproducible: datos, codigo, graficas, interpretacion y evidencias quedan en un mismo lugar.
+        </div>
+
+        <h4>Que se puede hacer en Colab para un articulo rapido</h4>
+        <table>
+          <thead>
+            <tr><th>Tarea</th><th>Ejemplo</th><th>Resultado para el paper</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Limpiar datos</td><td>Eliminar vacios, convertir variables, crear categorias.</td><td>Tabla metodologica y dataset listo.</td></tr>
+            <tr><td>Graficar</td><td>Barras, dispersion, boxplot, mapas de calor, series temporales.</td><td>Figuras PNG para LaTeX, Word o Gamma.</td></tr>
+            <tr><td>Modelar</td><td>Regresion lineal, arboles, random forest, clasificacion simple.</td><td>Resultados exploratorios y prediccion demostrativa.</td></tr>
+            <tr><td>Evaluar</td><td>MAE, RMSE, R2, matriz de confusion, accuracy.</td><td>Reporte claro de desempeno del modelo.</td></tr>
+            <tr><td>Exportar</td><td>CSV limpio, imagenes, tablas y resumenes.</td><td>Material listo para articulo y presentacion.</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Prompt para la IA de Colab</h4>
+        <div class="prompt">
+          <header><span>Prompt dentro de Colab</span><button class="copy">Copiar</button></header>
+          <pre>Genera codigo Python para Google Colab.
+
+Objetivo:
+Analizar un dataset educativo y entrenar un modelo predictivo sencillo.
+
+Necesito:
+1. Cargar o crear un DataFrame de ejemplo.
+2. Explorar variables con describe(), info() y conteos.
+3. Crear graficas:
+   - distribucion de la variable objetivo
+   - relacion entre variables numericas
+   - comparacion por categorias
+4. Entrenar un modelo de regresion para predecir horas_ahorradas_semana.
+5. Separar train/test.
+6. Usar scikit-learn.
+7. Reportar MAE, RMSE y R2.
+8. Mostrar importancia de variables si el modelo lo permite.
+9. Explicar en lenguaje academico que significa cada resultado.
+
+Reglas:
+- El codigo debe correr en una sola celda.
+- Incluye comentarios pedagogicos.
+- No afirmes causalidad.
+- Si los datos son sinteticos, dilo claramente en la interpretacion.</pre>
+        </div>
+
+        <h4>Codigo listo: modelo predictivo demostrativo</h4>
+        <div class="prompt">
+          <header><span>Modelo de prediccion en Colab</span><button class="copy">Copiar</button></header>
+          <pre>import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+from sklearn.model_selection import train_test_split
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.pipeline import Pipeline
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+np.random.seed(42)
+
+# Dataset sintetico para demostracion: no representa una muestra real.
+n = 120
+areas = ["Educacion", "Salud", "Ingenieria", "Ciencias sociales", "Ciencias basicas", "Artes"]
+uso = ["Bajo", "Medio", "Alto"]
+
+df = pd.DataFrame({
+    "area": np.random.choice(areas, n),
+    "experiencia_anios": np.random.randint(2, 31, n),
+    "uso_ia_previo": np.random.choice(uso, n, p=[0.35, 0.45, 0.20]),
+    "frecuencia_uso_semana": np.random.randint(0, 8, n),
+    "confianza_1a5": np.random.randint(2, 6, n),
+    "preocupacion_etica_1a5": np.random.randint(1, 6, n)
+})
+
+uso_peso = df["uso_ia_previo"].map({"Bajo": 0.5, "Medio": 1.5, "Alto": 2.8})
+df["horas_ahorradas_semana"] = (
+    1.2
+    + uso_peso
+    + df["frecuencia_uso_semana"] * 0.42
+    + df["confianza_1a5"] * 0.35
+    - df["preocupacion_etica_1a5"] * 0.10
+    + np.random.normal(0, 0.75, n)
+).clip(0.2, 9).round(2)
+
+display(df.head())
+display(df.describe(include="all"))
+
+sns.set_theme(style="whitegrid")
+
+plt.figure(figsize=(8, 4))
+sns.histplot(df["horas_ahorradas_semana"], kde=True)
+plt.title("Distribucion de horas ahorradas por semana")
+plt.xlabel("Horas ahorradas")
+plt.show()
+
+plt.figure(figsize=(9, 5))
+sns.boxplot(data=df, x="uso_ia_previo", y="horas_ahorradas_semana", order=["Bajo", "Medio", "Alto"])
+plt.title("Horas ahorradas segun uso previo de IA")
+plt.xlabel("Uso previo de IA")
+plt.ylabel("Horas ahorradas por semana")
+plt.show()
+
+X = df[["area", "experiencia_anios", "uso_ia_previo", "frecuencia_uso_semana", "confianza_1a5", "preocupacion_etica_1a5"]]
+y = df["horas_ahorradas_semana"]
+
+categoricas = ["area", "uso_ia_previo"]
+numericas = ["experiencia_anios", "frecuencia_uso_semana", "confianza_1a5", "preocupacion_etica_1a5"]
+
+preproceso = ColumnTransformer([
+    ("cat", OneHotEncoder(handle_unknown="ignore"), categoricas),
+    ("num", "passthrough", numericas)
+])
+
+modelo = Pipeline([
+    ("preproceso", preproceso),
+    ("rf", RandomForestRegressor(n_estimators=250, random_state=42))
+])
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+modelo.fit(X_train, y_train)
+pred = modelo.predict(X_test)
+
+mae = mean_absolute_error(y_test, pred)
+rmse = mean_squared_error(y_test, pred, squared=False)
+r2 = r2_score(y_test, pred)
+
+print("Metricas del modelo predictivo demostrativo")
+print(f"MAE: {mae:.2f} horas")
+print(f"RMSE: {rmse:.2f} horas")
+print(f"R2: {r2:.2f}")
+
+resultados = pd.DataFrame({"real": y_test, "predicho": pred}).reset_index(drop=True)
+display(resultados.head(10))
+
+plt.figure(figsize=(5, 5))
+sns.scatterplot(data=resultados, x="real", y="predicho")
+plt.plot([resultados.min().min(), resultados.max().max()], [resultados.min().min(), resultados.max().max()], "--", color="red")
+plt.title("Valores reales vs predichos")
+plt.xlabel("Horas reales")
+plt.ylabel("Horas predichas")
+plt.show()
+
+print("""
+Interpretacion:
+Este modelo predice horas ahorradas a partir de variables de uso, confianza y area.
+Como el dataset es sintetico, el resultado sirve para aprender el flujo metodologico,
+no para concluir que la IA causa ahorro de tiempo en docentes reales.
+""")</pre>
+        </div>
+
+        <h4>Prompt para interpretar resultados del modelo</h4>
+        <div class="prompt">
+          <header><span>Interpretacion academica del modelo</span><button class="copy">Copiar</button></header>
+          <pre>Actua como metodologo cuantitativo.
+
+Te pegare las metricas y graficas de un modelo predictivo de Colab.
+
+Necesito:
+1. Explicar que intenta predecir el modelo.
+2. Interpretar MAE, RMSE y R2 en lenguaje claro.
+3. Aclarar si el desempeno es bajo, moderado o alto.
+4. Senalar limites metodologicos.
+5. Redactar un parrafo de resultados para un articulo.
+6. Redactar un parrafo de limitaciones.
+7. Proponer una tabla para reportar el modelo.
+
+Reglas:
+- No afirmes causalidad.
+- No ocultes que el dataset es sintetico si lo es.
+- No uses lenguaje de marketing.
+- Usa tono academico y prudente.</pre>
         </div>
       </section>
 
@@ -1697,6 +2013,188 @@ Paper:
         </div>
       </section>
 
+      <section id="publicacion-ia">
+        <h3>Articulo cientifico sencillo desde cero con IA</h3>
+        <p class="lede">Este es el cierre del taller: un flujo 100% asistido por IA, pero no 100% delegado. La IA produce borradores, busquedas, codigo, graficas, LaTeX y material visual; el investigador decide, verifica y firma la responsabilidad academica.</p>
+
+        <div class="band">
+          <strong>Proyecto demostrativo sugerido:</strong> "Uso de IA generativa y ahorro de tiempo percibido en docentes universitarios: ejercicio descriptivo con dataset sintetico". Es sencillo, no requiere datos sensibles y permite mostrar busqueda, dataset, Colab, prediccion, LaTeX, Gamma y Canva en una misma historia.
+        </div>
+
+        <h4>Ruta de produccion rapida</h4>
+        <div class="schedule">
+          <div>1. Idea</div><div>ChatGPT o Claude ayudan a transformar un tema amplio en pregunta, objetivos, variables y alcance.</div>
+          <div>2. Evidencia</div><div>Perplexity explora fuentes recientes; Elicit y Consensus localizan papers; SciSpace o ChatPDF explican articulos densos.</div>
+          <div>3. Biblioteca</div><div>Zotero guarda referencias reales, corrige metadatos y exporta BibTeX.</div>
+          <div>4. Datos</div><div>ChatGPT genera un dataset sintetico para taller o ayuda a limpiar un dataset real anonimizado.</div>
+          <div>5. Analisis</div><div>Colab ejecuta Python, graficas, tablas y un modelo predictivo simple con scikit-learn.</div>
+          <div>6. Escritura</div><div>Claude o GPT redactan IMRyD: introduccion, metodo, resultados y discusion, marcando citas pendientes.</div>
+          <div>7. LaTeX</div><div>GPT o Claude generan main.tex, references.bib, figuras, tablas y declaracion de uso de IA.</div>
+          <div>8. Revision</div><div>Un agente par evaluador audita metodo, citas, privacidad, sesgos, causalidad y reproducibilidad.</div>
+          <div>9. Socializacion</div><div>Gamma crea diapositivas; Canva crea poster; Napkin crea diagrama del flujo; Gemini/ChatGPT generan imagenes didacticas.</div>
+          <div>10. Publicacion</div><div>Se exporta PDF, se prepara resumen, palabras clave, carta de presentacion y checklist de revista.</div>
+        </div>
+
+        <h4>Prompt maestro: articulo desde cero</h4>
+        <div class="prompt">
+          <header><span>Pipeline completo de publicacion</span><button class="copy">Copiar</button></header>
+          <pre>Actua como coordinador editorial, metodologo y analista de datos.
+
+Quiero producir un miniarticulo cientifico sencillo y rapido, asistido por IA, sobre:
+[pegar tema]
+
+Restricciones:
+- No usar datos personales.
+- Si no tengo datos reales, crear dataset sintetico y declararlo claramente.
+- No inventar citas, DOI ni autores.
+- No afirmar causalidad si el analisis es descriptivo o predictivo simple.
+- Todo debe ser reproducible.
+
+Entrega un plan de trabajo con:
+1. Titulo tentativo.
+2. Pregunta de investigacion.
+3. Objetivo general y 3 especificos.
+4. Variables.
+5. Estrategia de busqueda bibliografica.
+6. Herramientas que usare y para que: ChatGPT, Claude, Perplexity, Elicit, Consensus, SciSpace, Zotero, Colab, Gamma, Canva, Napkin, Gemini.
+7. Dataset requerido.
+8. Codigo Colab necesario.
+9. Graficas esperadas.
+10. Estructura IMRyD.
+11. Secciones de LaTeX.
+12. Checklist etico.
+13. Material de socializacion final.
+
+Formato:
+Tabla de pasos con herramienta, entrada, accion, salida y riesgo.</pre>
+        </div>
+
+        <h4>Prompts encadenados para ejecutar el articulo</h4>
+        <div class="grid">
+          <div class="prompt">
+            <header><span>1. Del tema a pregunta</span><button class="copy">Copiar</button></header>
+            <pre>Actua como asesor metodologico.
+
+Tema inicial:
+[pegar tema]
+
+Genera:
+1. problema de investigacion en 120 palabras
+2. pregunta de investigacion
+3. objetivo general
+4. 3 objetivos especificos
+5. variables o categorias
+6. alcance viable para articulo corto
+7. limites metodologicos esperables
+
+Evita temas demasiado amplios. Propón una version que se pueda analizar en una semana.</pre>
+          </div>
+          <div class="prompt">
+            <header><span>2. Literatura a matriz</span><button class="copy">Copiar</button></header>
+            <pre>Actua como bibliotecologo academico.
+
+Tema:
+[pegar pregunta de investigacion]
+
+Necesito:
+1. cadenas de busqueda en espanol e ingles
+2. criterios de inclusion y exclusion
+3. tabla para matriz de literatura
+4. fuentes prioritarias
+5. terminos alternativos
+6. posibles sesgos de busqueda
+
+Luego usare Elicit, Consensus y SciSpace para llenar la matriz.</pre>
+          </div>
+          <div class="prompt">
+            <header><span>3. Dataset y Colab</span><button class="copy">Copiar</button></header>
+            <pre>Actua como analista de datos.
+
+Con base en esta pregunta:
+[pegar pregunta]
+
+Genera:
+1. estructura de dataset
+2. diccionario de variables
+3. codigo Python para Colab
+4. graficas recomendadas
+5. modelo predictivo simple si aplica
+6. metricas de evaluacion
+7. parrafo metodologico para el paper
+
+Si el dataset es sintetico, debe quedar declarado en el codigo y en el texto.</pre>
+          </div>
+          <div class="prompt">
+            <header><span>4. Paper LaTeX</span><button class="copy">Copiar</button></header>
+            <pre>Actua como editor academico experto en LaTeX.
+
+Material:
+- pregunta: [pegar]
+- objetivos: [pegar]
+- matriz de literatura: [pegar]
+- metodo: [pegar]
+- resultados de Colab: [pegar]
+- graficas: [pegar nombres de archivos]
+- references.bib: [pegar]
+
+Genera:
+1. main.tex completo
+2. references.bib depurado
+3. tabla de variables
+4. seccion de resultados con figuras
+5. discusion prudente
+6. limitaciones
+7. declaracion de uso de IA
+
+No inventes citas. Usa [CITA PENDIENTE] donde falte evidencia.</pre>
+          </div>
+        </div>
+
+        <h4>Checklist antes de publicar o presentar</h4>
+        <table>
+          <thead>
+            <tr><th>Revision</th><th>Pregunta critica</th><th>Herramienta util</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Fuentes</td><td>Existe cada referencia y dice lo que afirmo?</td><td>Zotero, SciSpace, par evaluador IA.</td></tr>
+            <tr><td>Datos</td><td>Son reales, anonimizados o sinteticos? Esta declarado?</td><td>Colab, GPT, Claude.</td></tr>
+            <tr><td>Metodo</td><td>El metodo responde a la pregunta sin exagerar causalidad?</td><td>Claude, agente metodologo.</td></tr>
+            <tr><td>Codigo</td><td>Otra persona puede correr el notebook y obtener resultados similares?</td><td>Colab, GitHub, Codex.</td></tr>
+            <tr><td>Etica</td><td>Hay privacidad, sesgo, autoria o conflicto de interes?</td><td>Checklist etico, normativa institucional.</td></tr>
+            <tr><td>Formato</td><td>La revista o evento acepta declaracion de uso de IA?</td><td>Guia para autores, GPT como asistente de revision.</td></tr>
+            <tr><td>Socializacion</td><td>La presentacion comunica hallazgos y limites con honestidad?</td><td>Gamma, Canva, Napkin.</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Prompt final: paquete de envio</h4>
+        <div class="prompt">
+          <header><span>Paquete final para revista o evento</span><button class="copy">Copiar</button></header>
+          <pre>Actua como asistente editorial.
+
+Con base en este articulo:
+[pegar articulo completo]
+
+Genera un paquete de envio:
+1. titulo en espanol e ingles
+2. resumen estructurado de 250 palabras
+3. abstract
+4. 5 palabras clave en espanol
+5. 5 keywords en ingles
+6. carta corta al editor o comite
+7. declaracion de uso de IA
+8. declaracion de disponibilidad de datos
+9. checklist de archivos que debo adjuntar
+10. version de 8 diapositivas para Gamma
+11. prompt para Canva para crear poster academico
+12. prompt para Napkin para crear diagrama metodologico
+
+Reglas:
+- No inventes revista ni normas especificas.
+- Marca campos que dependen de la revista como [REVISAR GUIA DE AUTORES].
+- Mantén tono academico y prudente.</pre>
+        </div>
+      </section>
+
       <section id="imagenes">
         <h3>Estacion 7: imagenes didacticas con Gemini o ChatGPT</h3>
         <p class="lede">El truco no es pedir "una imagen bonita". Es especificar proposito didactico, concepto, audiencia, estilo, restricciones y elementos que no deben aparecer.</p>
@@ -1786,6 +2284,12 @@ No suavices los problemas. Quiero una auditoria exigente.</pre>
             <tr><td>Perplexity</td><td><a href="https://www.perplexity.ai/help-center/pt/articles/10352961" target="_blank">Perplexity Spaces</a></td><td>Los Spaces organizan investigacion, instrucciones, archivos y busquedas por proyecto.</td></tr>
             <tr><td>Elicit</td><td><a href="https://pro.elicit.com/solutions/systematic-reviews" target="_blank">Elicit systematic reviews</a></td><td>Orienta busqueda, screening, extraccion de datos y reportes para revisiones sistematicas.</td></tr>
             <tr><td>Consensus</td><td><a href="https://help.consensus.app/en/articles/11954907-consensus-product-changelog" target="_blank">Consensus changelog</a></td><td>Incluye busqueda de papers, analisis de articulos, biblioteca, grafo de citas e integraciones.</td></tr>
+            <tr><td>Codex</td><td><a href="https://developers.openai.com/codex/codex-manual.md" target="_blank">OpenAI Codex manual</a></td><td>Documenta skills, MCP, subagentes, CLI, app, plugins y flujos de trabajo con repositorios.</td></tr>
+            <tr><td>Claude Code</td><td><a href="https://code.claude.com/docs/en/overview" target="_blank">Claude Code overview</a></td><td>Define Claude Code como herramienta agentica que lee codigo, edita archivos, ejecuta comandos e integra herramientas.</td></tr>
+            <tr><td>Claude MCP</td><td><a href="https://code.claude.com/docs/en/mcp" target="_blank">Claude Code MCP</a></td><td>Explica como conectar Claude Code con herramientas externas y fuentes de datos mediante MCP.</td></tr>
+            <tr><td>Claude skills</td><td><a href="https://code.claude.com/docs/en/skills" target="_blank">Claude Code skills</a></td><td>Describe skills como instrucciones reutilizables que se invocan por nombre o contexto.</td></tr>
+            <tr><td>Claude subagentes</td><td><a href="https://code.claude.com/docs/en/sub-agents" target="_blank">Claude Code subagents</a></td><td>Describe subagentes especializados con contexto, herramientas y permisos propios.</td></tr>
+            <tr><td>Google Colab</td><td><a href="https://colab.research.google.com/" target="_blank">Google Colab</a></td><td>Permite ejecutar notebooks Python en la nube para analisis, graficas y modelos reproducibles.</td></tr>
           </tbody>
         </table>
         <div class="footer">
